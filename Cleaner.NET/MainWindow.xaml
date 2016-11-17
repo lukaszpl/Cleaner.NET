@@ -1,0 +1,84 @@
+﻿<Window x:Class="Cleaner.NET.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cleaner.NET"
+        mc:Ignorable="d"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:p="clr-namespace:Cleaner.NET.Languages"
+        Title="Cleaner .NET" Height="531.296" Width="879.359" MinWidth="700" MinHeight="450" Icon="Resources/ico.ico">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="460.833,470.667" StartPoint="460.833,0" MappingMode="Absolute">
+            <GradientStop Color="#FF0095B6" Offset="0"/>
+            <GradientStop Color="White" Offset="0.209"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="70" Source="Resources/logographic.png"/>
+        <Image HorizontalAlignment="Left" Height="54" Margin="75,16,0,0" VerticalAlignment="Top" Width="259" Source="Resources/logo.png"/>
+        <TextBlock HorizontalAlignment="Left" Margin="352,10,0,0" TextWrapping="Wrap" Text="{x:Static local:Informations.ProgramName}" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="352,54,0,0" TextWrapping="Wrap" Text="{x:Static local:Informations.Username}" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="352,36,0,0" TextWrapping="Wrap" Text="{x:Static local:Informations.SystemName}" VerticalAlignment="Top"/>
+        <TabControl Margin="0,80,0,0" IsEnabled="{Binding TabControlIsEnabled}">
+            <TabItem Header="{x:Static p:Lang.Cleaner_TabItem}" FontWeight="Bold" FontSize="14">
+                <Grid Background="#FFE5E5E5">
+                    <TabControl HorizontalAlignment="Left" Width="216" Margin="2,4,0,4">
+                        <TabItem Header="{x:Static p:Lang.Windows_TabItem}">
+                            <Grid Background="#FFE5E5E5">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                    <ItemsControl Background="White" ItemsSource="{Binding ListOfWindowsElements}"/>
+                                </ScrollViewer>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="{x:Static p:Lang.Other_TabItem}" FontWeight="Normal">
+                            <Grid>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                    <ItemsControl ItemsSource="{Binding ListOfOtherElemets}"/>
+                                </ScrollViewer>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                    <ProgressBar Height="20" Margin="223,34,10,0" VerticalAlignment="Top" Value="{Binding ProgressBarValue}"/>
+                    <TextBox Margin="223,61,10,64" IsReadOnly="True" FontWeight="Normal" Text="{Binding ClearLogText}"/>
+                    <Button Content="{x:Static p:Lang.Clean_Button}" Margin="0,0,10,10" Height="43" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="114" Command="{Binding CleanCommand }"/>
+                    <Button Content="{x:Static p:Lang.Analyze_Button}" Margin="223,0,0,10" Height="43" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="114" Command="{Binding AnalyzeCommand}"/>
+                    <TextBlock Margin="223,10,0,0" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left"/>
+                    <ProgressBar HorizontalAlignment="Right" Height="10" Margin="0,19,10,0" VerticalAlignment="Top" Width="58" IsIndeterminate="{Binding ProgressBarIsIndeterminate}" Visibility="{Binding ProgressBarIsIndeterminateVisibility}"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{x:Static p:Lang.Settings_TabItem}" FontSize="13">
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="{x:Static p:Lang.Language}" VerticalAlignment="Top"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="283" ItemsSource="{Binding ListOfLang}" SelectedIndex="{Binding SelectedLangItem}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectionChangedLangCommand}" CommandParameter="{Binding ElementName=Lang_comboBox}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{x:Static p:Lang.About_TabItem}" FontSize="13">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="278*"/>
+                        <RowDefinition Height="111*" MaxHeight="150"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="644*"/>
+                        <ColumnDefinition Width="221*" MaxWidth="300" MinWidth="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,145,0,0" TextWrapping="Wrap" Text="{x:Static local:Informations.TextBuild}" VerticalAlignment="Top" FontStyle="Italic" FontSize="12"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,119,0,0" TextWrapping="Wrap" Text="{x:Static local:Informations.ProgramName}" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+                    <Image HorizontalAlignment="Left" Height="90" VerticalAlignment="Top" Width="90" Source="Resources/logographic.png" Margin="6,8,0,0"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,166,0,0" TextWrapping="Wrap" Text="{x:Static local:Informations.LicenseAuthor}" VerticalAlignment="Top" FontSize="16"/>
+                    <Image HorizontalAlignment="Left" Height="68" Margin="96,30,0,0" VerticalAlignment="Top" Width="290" Source="Resources/logo.png"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="6,0,0,5" TextWrapping="Wrap" Text="{x:Static p:Lang.Warning}" VerticalAlignment="Bottom" FontWeight="Bold" Foreground="Red" FontSize="12" Grid.Row="1"/>
+                    <ListBox Margin="1,1,10,10" ItemsSource="{Binding ListOfPlugins}" Grid.Column="1" Grid.Row="1"/>
+                    <TextBlock Margin="1,0,0,4" TextWrapping="Wrap" Text="{x:Static p:Lang.PluginsLoaded}" Height="17" VerticalAlignment="Bottom" Grid.Column="1" MinWidth="200" HorizontalAlignment="Left" Width="200"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

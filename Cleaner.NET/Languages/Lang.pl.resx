@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About_TabItem" xml:space="preserve">
+    <value>O programie</value>
+  </data>
+  <data name="Analyze_Button" xml:space="preserve">
+    <value>Analizuj</value>
+  </data>
+  <data name="Cleaner_TabItem" xml:space="preserve">
+    <value>Cleaner</value>
+  </data>
+  <data name="Clean_Button" xml:space="preserve">
+    <value>Czyść</value>
+  </data>
+  <data name="Other_TabItem" xml:space="preserve">
+    <value>Inne</value>
+  </data>
+  <data name="Settings_TabItem" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="SystemInformation_TabItem" xml:space="preserve">
+    <value>Informacje o systemie</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Użytkownik</value>
+  </data>
+  <data name="Windows_TabItem" xml:space="preserve">
+    <value>Windows</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Język:</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Twórca</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>Licencja</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>To jest wersja beta aplikacji, może zawierać błędy!</value>
+  </data>
+  <data name="MsgError" xml:space="preserve">
+    <value>Błąd</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Informacja</value>
+  </data>
+  <data name="BadPlugin" xml:space="preserve">
+    <value>Wykryto plugin, który nie może zostać załadowany. Proszę usunąć go z folderu plugins. Lokalizacja:</value>
+  </data>
+  <data name="PluginsLoaded" xml:space="preserve">
+    <value>Załadowane pluginy:</value>
+  </data>
+  <data name="AnalyzeLog" xml:space="preserve">
+    <value>Przybliżony rozmiar plików do usunięcia:</value>
+  </data>
+  <data name="CleanLog" xml:space="preserve">
+    <value>Usunięto pliki o rozmiarze:</value>
+  </data>
+  <data name="Clipboard_CheckBox" xml:space="preserve">
+    <value>Schowek</value>
+  </data>
+  <data name="Recentdoc_CheckBox" xml:space="preserve">
+    <value>Ostatnie dokumenty</value>
+  </data>
+  <data name="RecycleBin_CheckBox" xml:space="preserve">
+    <value>Opróżnij kosz</value>
+  </data>
+  <data name="TempDns_CheckBox" xml:space="preserve">
+    <value>Cache DNS</value>
+  </data>
+  <data name="Temp_CheckBox" xml:space="preserve">
+    <value>Pliki tymczasowe</value>
+  </data>
+  <data name="ThumbnailsCache_CheckBox" xml:space="preserve">
+    <value>Pamięć podręczna miniaturek</value>
+  </data>
+  <data name="WinErrors_CheckBox" xml:space="preserve">
+    <value>Raportowanie błędów Windows</value>
+  </data>
+  <data name="TempFont_CheckBox" xml:space="preserve">
+    <value>Pamięć podręczna czcionek</value>
+  </data>
+  <data name="FlushDns" xml:space="preserve">
+    <value>Cache DNS zostanie usunięte</value>
+  </data>
+  <data name="FlushDns_Error" xml:space="preserve">
+    <value>Czyszczenie systemowej pamięci podręcznej nazw DNS nie powiodło się!</value>
+  </data>
+  <data name="FlushDns_OK" xml:space="preserve">
+    <value>Pomyślnie oczyszono pamięć podręczną DNS</value>
+  </data>
+  <data name="PluginError" xml:space="preserve">
+    <value>Wystapił błąd wewnątrzny pluginu, szczegóły:</value>
+  </data>
+  <data name="OutOfDatePlugin" xml:space="preserve">
+    <value>Wykryto plugin nie przeznaczony do pracy z tą wersją programu! Czy chcesz załadować go pomimo to? Lokalizacja:</value>
+  </data>
+  <data name="MsgWarning" xml:space="preserve">
+    <value>Ostrzeżenie</value>
+  </data>
+  <data name="ClipboardClean" xml:space="preserve">
+    <value>Schowek został oczyszczony</value>
+  </data>
+  <data name="ClipboardNotClean" xml:space="preserve">
+    <value>Schowek zostanie oczyszczony</value>
+  </data>
+  <data name="TrashClean" xml:space="preserve">
+    <value>Kosz został opróżniony</value>
+  </data>
+  <data name="TrashNoClean" xml:space="preserve">
+    <value>Kosz zostanie opróżniony</value>
+  </data>
+  <data name="ComputerName" xml:space="preserve">
+    <value>Nazwa komputera: </value>
+  </data>
+  <data name="CoresNumber" xml:space="preserve">
+    <value>Liczba rdzeni: </value>
+  </data>
+  <data name="Drives" xml:space="preserve">
+    <value>Dyski: </value>
+  </data>
+  <data name="FwVersion" xml:space="preserve">
+    <value>Wersja firmware: </value>
+  </data>
+  <data name="GraphicCard" xml:space="preserve">
+    <value>Karta graficzna: </value>
+  </data>
+  <data name="LoadInf_Button" xml:space="preserve">
+    <value>Załaduj</value>
+  </data>
+  <data name="Manufacturer" xml:space="preserve">
+    <value>Producent: </value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model: </value>
+  </data>
+  <data name="Motherboard" xml:space="preserve">
+    <value>Płyta główna: </value>
+  </data>
+  <data name="Numberofpartition" xml:space="preserve">
+    <value>Liczba partycji: </value>
+  </data>
+  <data name="SerialNumber" xml:space="preserve">
+    <value>Numer seryjny: </value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Rozmiar: </value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status: </value>
+  </data>
+  <data name="SystemDir" xml:space="preserve">
+    <value>Katalog systemu: </value>
+  </data>
+  <data name="SystemDisc" xml:space="preserve">
+    <value>Dysk systemowy: </value>
+  </data>
+  <data name="ThrNumber" xml:space="preserve">
+    <value>Liczba wątków: </value>
+  </data>
+  <data name="Virtualization" xml:space="preserve">
+    <value>Wirtualizacja: </value>
+  </data>
+</root>
