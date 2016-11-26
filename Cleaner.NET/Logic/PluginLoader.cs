@@ -53,9 +53,9 @@ namespace Cleaner.NET
                 else
                     IsWorking = true;
             }
-            catch
+            catch(Exception e)
             {
-                MessageBox.Show(Languages.Lang.BadPlugin + "\n" + path, Languages.Lang.MsgError, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Languages.Lang.BadPlugin + "\n" + path + "\n\n" + e.ToString(), Languages.Lang.MsgError, MessageBoxButton.OK, MessageBoxImage.Error);
                 IsWorking = false;
             }
         }
