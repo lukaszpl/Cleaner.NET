@@ -23,7 +23,6 @@ namespace Cleaner.NET
 {
     public class SettingsLoader
     {
-
         public static void LoadSettings(MainWindowViewModel vm)
         {          
             string path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
@@ -32,10 +31,8 @@ namespace Cleaner.NET
                 XmlReader xmlReader = new XmlReader();
                 xmlReader.LoadFile(path);
 
-                //only select combobox item, set language in App.xaml.cs
-                vm.SelectedLangItem = Convert.ToInt16(xmlReader.GetSettingByName("SelectedLang"));
                 //
-                foreach (object item in vm.ListOfWindowsElements)
+                foreach (object item in vm.cleanerTabViewModel.ListOfWindowsElements)
                 {
                     CheckBox a = item as CheckBox;
                     if (a != null)
@@ -44,7 +41,7 @@ namespace Cleaner.NET
                     }
                 }
                 //for plugins
-                foreach (object item in vm.ListOfOtherElemets)
+                foreach (object item in vm.cleanerTabViewModel.ListOfOtherElemets)
                 {
                     CheckBox a = item as CheckBox;
                     if (a != null)
@@ -65,10 +62,10 @@ namespace Cleaner.NET
             langproperty.Provider = AppSettings.Default.Providers["LocalFileSettingsProvider"];
             langproperty.Attributes.Add(typeof(System.Configuration.UserScopedSettingAttribute), new System.Configuration.UserScopedSettingAttribute());
             AppSettings.Default.Properties.Add(langproperty);
-            AppSettings.Default["SelectedLang"] = vm.SelectedLangItem;
+            AppSettings.Default["SelectedLang"] = vm.settingsTabViewModel.SelectedLangItem;
             
             //////
-            foreach (object item in vm.ListOfWindowsElements)
+            foreach (object item in vm.cleanerTabViewModel.ListOfWindowsElements)
             {
                 CheckBox a = item as CheckBox;
                 if (a != null)
@@ -85,7 +82,7 @@ namespace Cleaner.NET
                 }
             }
             //for plugins
-            foreach (object item in vm.ListOfOtherElemets)
+            foreach (object item in vm.cleanerTabViewModel.ListOfOtherElemets)
             {             
                 CheckBox a = item as CheckBox;
                 if (a != null)
@@ -104,6 +101,6 @@ namespace Cleaner.NET
             AppSettings.Default.Save();
             AppSettings.Default.Properties.Clear();
         }
-
+        
     }
 }

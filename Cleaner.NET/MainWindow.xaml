@@ -21,7 +21,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="352,54,0,0" TextWrapping="Wrap" Text="{x:Static local:Informations.Username}" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="352,36,0,0" TextWrapping="Wrap" Text="{x:Static local:Informations.SystemName}" VerticalAlignment="Top"/>
         <TabControl Margin="0,80,0,0" IsEnabled="{Binding TabControlIsEnabled}">
-            <TabItem Header="{x:Static p:Lang.Cleaner_TabItem}" FontWeight="Bold" FontSize="14">
+            <TabItem DataContext="{Binding Children[0]}" Header="{x:Static p:Lang.Cleaner_TabItem}" FontWeight="Bold" FontSize="14">
                 <Grid Background="#FFE5E5E5">
                     <TabControl HorizontalAlignment="Left" Width="216" Margin="2,4,0,4">
                         <TabItem Header="{x:Static p:Lang.Windows_TabItem}">
@@ -47,7 +47,7 @@
                     <ProgressBar HorizontalAlignment="Right" Height="10" Margin="0,19,10,0" VerticalAlignment="Top" Width="58" IsIndeterminate="{Binding ProgressBarIsIndeterminate}" Visibility="{Binding ProgressBarIsIndeterminateVisibility}"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="{x:Static p:Lang.Settings_TabItem}" FontSize="13">
+            <TabItem DataContext="{Binding Children[1]}" Header="{x:Static p:Lang.Settings_TabItem}" FontSize="13">
                 <Grid Background="#FFE5E5E5">
                     <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="{x:Static p:Lang.Language}" VerticalAlignment="Top"/>
                     <ComboBox HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="283" ItemsSource="{Binding ListOfLang}" SelectedIndex="{Binding SelectedLangItem}">
@@ -59,7 +59,7 @@
                     </ComboBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="{x:Static p:Lang.About_TabItem}" FontSize="13">
+            <TabItem DataContext="{Binding Children[2]}" Header="{x:Static p:Lang.About_TabItem}" FontSize="13">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="278*"/>

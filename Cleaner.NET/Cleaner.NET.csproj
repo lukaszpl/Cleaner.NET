@@ -118,7 +118,10 @@
     <Compile Include="Logic\SystemInformation.cs" />
     <Compile Include="Logic\PluginLoader.cs" />
     <Compile Include="Logic\SettingsLoader.cs" />
+    <Compile Include="ViewModel\AboutTabViewModel.cs" />
+    <Compile Include="ViewModel\CleanerTabViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\SettingsTabViewModel.cs" />
     <Compile Include="ViewModel\WindowsItems.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
