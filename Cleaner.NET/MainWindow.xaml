@@ -53,7 +53,7 @@
                     <ComboBox HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="283" ItemsSource="{Binding ListOfLang}" SelectedIndex="{Binding SelectedLangItem}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding SelectionChangedLangCommand}" CommandParameter="{Binding ElementName=Lang_comboBox}"/>
+                                <i:InvokeCommandAction Command="{Binding SelectionChangedLangCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ComboBox>
