@@ -71,11 +71,7 @@ namespace Cleaner.NET
                     catch { }
                 }
             }
-
-            if (DoClean)
-                return  Languages.Lang.Temp_CheckBox + ": " + Size + " MB" + "\n\n";
-            else
-                return Languages.Lang.Temp_CheckBox + ": " + Size + " MB" + "\n\n";
+            return  Languages.Lang.Temp_CheckBox + ": " + Size + " MB" + "\n\n";
         }
         public string CleanWinErrors(bool DoClean)
         {
@@ -99,10 +95,7 @@ namespace Cleaner.NET
                     }
                 }
             }
-            if (DoClean)
-                return Languages.Lang.WinErrors_CheckBox + ": " + Size + " MB" + "\n\n";
-            else
-                return Languages.Lang.WinErrors_CheckBox + ": " + Size + " MB" + "\n\n";
+            return Languages.Lang.WinErrors_CheckBox + ": " + Size + " MB" + "\n\n";
         }
         public string CleanFontCache(bool DoClean)
         {
@@ -112,10 +105,7 @@ namespace Cleaner.NET
             string[] array = { path };
             DeleteFiles(array, DoClean);
 
-            if (DoClean)
-                return Languages.Lang.TempFont_CheckBox + ": " + Size + " MB" + "\n\n";
-            else
-                return Languages.Lang.TempFont_CheckBox + ": " + Size + " MB" + "\n\n";
+            return Languages.Lang.TempFont_CheckBox + ": " + Size + " MB" + "\n\n";
         }
         #region DNS
         [DllImport("dnsapi.dll", EntryPoint = "DnsFlushResolverCache")]
@@ -141,10 +131,8 @@ namespace Cleaner.NET
             if (DoClean)
             {
                 Application.Current.Dispatcher.Invoke(new Action(() => { Clipboard.SetData(DataFormats.Text, (Object)" "); })); //set in clipboard " "
-                return Languages.Lang.ClipboardClean + "\n\n";
             }
-            else
-                return Languages.Lang.ClipboardNotClean + "\n\n";
+            return Languages.Lang.ClipboardNotClean + "\n\n";
         }
         #region RecycleBin
         enum RecycleFlags : uint
@@ -194,10 +182,7 @@ namespace Cleaner.NET
                     }
                 }
             }
-            if (DoClean)
-                return Languages.Lang.Recentdoc_CheckBox + ": " + Size + " MB" + "\n\n";
-            else
-                return Languages.Lang.Recentdoc_CheckBox + ": " + Size + " MB" + "\n\n";
+            return Languages.Lang.Recentdoc_CheckBox + ": " + Size + " MB" + "\n\n";
         }
         public string CleanThumbCache(bool DoClean)
         {
@@ -222,11 +207,7 @@ namespace Cleaner.NET
                     }
                 }
             }
-            if (DoClean)
-                return Languages.Lang.ThumbnailsCache_CheckBox + ": " + Size + " MB" + "\n\n";
-            else
-                return Languages.Lang.ThumbnailsCache_CheckBox + ": " + Size + " MB" + "\n\n";
-            
+            return Languages.Lang.ThumbnailsCache_CheckBox + ": " + Size + " MB" + "\n\n";      
         }
     }
 }
