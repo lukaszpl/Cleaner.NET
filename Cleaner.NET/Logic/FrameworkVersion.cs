@@ -19,7 +19,7 @@ namespace Framework
 {
     class FrameworkVersion
     {
-        public static bool Get45DotNetVersion()
+        public static bool Is45DotNetVersion()
         {
             using (RegistryKey DNVKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey("SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full\\"))
             {

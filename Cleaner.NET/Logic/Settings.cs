@@ -15,15 +15,16 @@
 using Cleaner.NET.Properties;
 using Cleaner.NET.ViewModel;
 using System;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Windows.Controls;
 
 namespace Cleaner.NET
 {
-    public class SettingsLoader
+    public class Settings
     {
-        public static void LoadSettings(MainWindowViewModel vm)
+        public static void Load(MainWindowViewModel vm)
         {          
             string path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
             if (File.Exists(path))
@@ -52,7 +53,8 @@ namespace Cleaner.NET
                 }               
             }
         }
-        public static void SaveSettings(MainWindowViewModel vm)
+
+        public static void Save(MainWindowViewModel vm)
         {
             //add lang setting
             System.Configuration.SettingsProperty langproperty = new System.Configuration.SettingsProperty("SelectedLang");
@@ -63,27 +65,19 @@ namespace Cleaner.NET
             langproperty.Attributes.Add(typeof(System.Configuration.UserScopedSettingAttribute), new System.Configuration.UserScopedSettingAttribute());
             AppSettings.Default.Properties.Add(langproperty);
             AppSettings.Default["SelectedLang"] = vm.settingsTabViewModel.SelectedLangItem;
-            
-            //////
-            foreach (object item in vm.cleanerTabViewModel.ListOfWindowsElements)
-            {
-                CheckBox a = item as CheckBox;
-                if (a != null)
-                {
-                    System.Configuration.SettingsProperty property = new System.Configuration.SettingsProperty(a.Name);
-                    property.DefaultValue = true;
-                    property.IsReadOnly = false;
-                    property.PropertyType = typeof(bool);
-                    property.Provider = AppSettings.Default.Providers["LocalFileSettingsProvider"];
-                    property.Attributes.Add(typeof(System.Configuration.UserScopedSettingAttribute), new System.Configuration.UserScopedSettingAttribute());
-                    AppSettings.Default.Properties.Add(property);
-                    AppSettings.Default[a.Name] = a.IsChecked;                
-                    property = null;
-                }
-            }
+
+            SaveCheckBoxes(vm.cleanerTabViewModel.ListOfWindowsElements);
             //for plugins
-            foreach (object item in vm.cleanerTabViewModel.ListOfOtherElemets)
-            {             
+            SaveCheckBoxes(vm.cleanerTabViewModel.ListOfOtherElemets);
+
+            AppSettings.Default.Save();
+            AppSettings.Default.Properties.Clear();
+        }
+
+        private static void SaveCheckBoxes(ObservableCollection<object> obj)
+        {
+            foreach (object item in obj)
+            {
                 CheckBox a = item as CheckBox;
                 if (a != null)
                 {
@@ -98,9 +92,6 @@ namespace Cleaner.NET
                     property = null;
                 }
             }
-            AppSettings.Default.Save();
-            AppSettings.Default.Properties.Clear();
         }
-        
     }
 }

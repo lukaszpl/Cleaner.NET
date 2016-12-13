@@ -41,8 +41,8 @@ namespace Cleaner.NET
 
         public string GetSettingByName(string Name)
         {
-            XmlNodeList Shops = XmlDoc.SelectNodes("//userSettings//Cleaner.NET.Properties.AppSettings//setting[@name = '" + Name + "']//value");
-            foreach (XmlNode xn in Shops)
+            XmlNodeList xmlNode = XmlDoc.SelectNodes("//userSettings//Cleaner.NET.Properties.AppSettings//setting[@name = '" + Name + "']//value");
+            foreach (XmlNode xn in xmlNode)
             {
                 if (xn.HasChildNodes)
                 {

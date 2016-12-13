@@ -14,7 +14,7 @@ namespace Cleaner.NET
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            if (Framework.FrameworkVersion.Get45DotNetVersion())
+            if (Framework.FrameworkVersion.Is45DotNetVersion())
             {
                 string path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
                 if (File.Exists(path))

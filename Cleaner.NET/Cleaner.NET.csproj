@@ -117,7 +117,7 @@
     <Compile Include="Logic\CleanClass.cs" />
     <Compile Include="Logic\SystemInformation.cs" />
     <Compile Include="Logic\PluginLoader.cs" />
-    <Compile Include="Logic\SettingsLoader.cs" />
+    <Compile Include="Logic\Settings.cs" />
     <Compile Include="ViewModel\AboutTabViewModel.cs" />
     <Compile Include="ViewModel\CleanerTabViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
@@ -148,7 +148,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Informations.cs" />
+    <Compile Include="Logic\Informations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

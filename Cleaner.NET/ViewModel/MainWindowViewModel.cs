@@ -34,7 +34,7 @@ namespace Cleaner.NET.ViewModel
         public Action CloseAction { get; internal set; }
         internal void OnClosing(object sender, CancelEventArgs e)
         {
-            SettingsLoader.SaveSettings(this);
+            Settings.Save(this);
         }
         #endregion
 
@@ -46,7 +46,7 @@ namespace Cleaner.NET.ViewModel
             _children.Add(cleanerTabViewModel =  new CleanerTabViewModel(this));
             _children.Add(settingsTabViewModel = new SettingsTabViewModel(this));
             _children.Add(aboutTabViewModel = new AboutTabViewModel(this));
-            SettingsLoader.LoadSettings(this);
+            Settings.Load(this);
         }
 
         public ObservableCollection<object> Children
