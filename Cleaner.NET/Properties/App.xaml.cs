@@ -27,8 +27,7 @@ namespace Cleaner.NET
                     if (langid == 1)
                         Thread.CurrentThread.CurrentUICulture = new CultureInfo("pl-PL");
                 }
-                MainWindow mw = new MainWindow();
-                mw.Show();
+                new MainWindow().Show();
             }
             else
             {
