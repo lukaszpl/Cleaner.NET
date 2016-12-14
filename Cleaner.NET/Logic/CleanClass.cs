@@ -131,6 +131,7 @@ namespace Cleaner.NET
             if (DoClean)
             {
                 Application.Current.Dispatcher.Invoke(new Action(() => { Clipboard.SetData(DataFormats.Text, (Object)" "); })); //set in clipboard " "
+                return Languages.Lang.ClipboardClean + "\n\n";
             }
             return Languages.Lang.ClipboardNotClean + "\n\n";
         }
