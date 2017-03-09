@@ -228,4 +228,37 @@
   <data name="TrashNoClean" xml:space="preserve">
     <value>Trash will be empty</value>
   </data>
+  <data name="Registry_TabItem" xml:space="preserve">
+    <value>Registry</value>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="RegistryClean" xml:space="preserve">
+    <value>Delete selected entries</value>
+  </data>
+  <data name="RegistrySearch" xml:space="preserve">
+    <value>Search unnecessary entries</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="ChooseElements" xml:space="preserve">
+    <value>Choose elements:</value>
+  </data>
+  <data name="MissingDLL" xml:space="preserve">
+    <value>Missing reference to the DLL</value>
+  </data>
+  <data name="NonExistentSoftware" xml:space="preserve">
+    <value>Non-existent Software</value>
+  </data>
+  <data name="MissingFiles" xml:space="preserve">
+    <value>Missing files</value>
+  </data>
+  <data name="MissingMUI" xml:space="preserve">
+    <value>Missing MUI reference</value>
+  </data>
 </root>

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:p="clr-namespace:Cleaner.NET.Languages"
-        Title="Cleaner .NET" Height="531.296" Width="879.359" MinWidth="700" MinHeight="450" Icon="Resources/ico.ico">
+        Title="Cleaner .NET" Height="550.296" Width="972.359" MinWidth="700" MinHeight="450" Icon="Resources/ico.ico">
     <Window.Background>
         <LinearGradientBrush EndPoint="460.833,470.667" StartPoint="460.833,0" MappingMode="Absolute">
             <GradientStop Color="#FF0095B6" Offset="0"/>
@@ -47,7 +47,40 @@
                     <ProgressBar HorizontalAlignment="Right" Height="10" Margin="0,19,10,0" VerticalAlignment="Top" Width="58" IsIndeterminate="{Binding ProgressBarIsIndeterminate}" Visibility="{Binding ProgressBarIsIndeterminateVisibility}"/>
                 </Grid>
             </TabItem>
-            <TabItem DataContext="{Binding Children[1]}" Header="{x:Static p:Lang.Settings_TabItem}" FontSize="13">
+            <TabItem DataContext="{Binding Children[1]}" Header="{x:Static p:Lang.Registry_TabItem}" FontSize="14">
+                <Grid Background="#FFE5E5E5">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="#FFB95F5F" HorizontalAlignment="Left" Width="220" Margin="3,5,0,5">
+                        <ItemsControl Background="White">
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static p:Lang.ChooseElements}" FontWeight="Bold"/>
+                            <CheckBox Content="{x:Static p:Lang.NonExistentSoftware}" IsChecked="{Binding MissingSoftIsChecked}"/>
+                            <CheckBox Content="{x:Static p:Lang.MissingDLL}" IsChecked="{Binding MissingDLLIsChecked}"/>
+                            <CheckBox Content="{x:Static p:Lang.MissingFiles}" IsChecked="{Binding MissingFiles}"/>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <ListView Margin="228,25,5,63" ItemsSource="{Binding ListOfRegKeys}" SelectionMode="Single">
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn Width="30">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox IsChecked="{Binding IsChecked}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="{x:Static p:Lang.Key}" Width="400" DisplayMemberBinding="{Binding Key}"/>
+                                    <GridViewColumn  Header="{x:Static p:Lang.Value}" Width="200" DisplayMemberBinding="{Binding Value}"/>
+                                    <GridViewColumn  Header="{x:Static p:Lang.Data}" Width="400" DisplayMemberBinding="{Binding ValueData}"/>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Content="{x:Static p:Lang.RegistrySearch}" Command="{Binding AnalyzeCommand}" HorizontalAlignment="Left" Margin="228,0,0,5" VerticalAlignment="Bottom" Width="185" Height="50" FontWeight="Bold"/>
+                    <Button Content="{x:Static p:Lang.RegistryClean}" Command="{Binding CleanCommand}" HorizontalAlignment="Right" Margin="0,0,5,5" VerticalAlignment="Bottom" Width="185" Height="50" FontWeight="Bold"/>
+                    <ProgressBar Height="15" Margin="228,5,5,0" VerticalAlignment="Top" IsIndeterminate="{Binding ProgressBarIsIndeterminate}"/>
+                </Grid>
+            </TabItem>
+            <TabItem DataContext="{Binding Children[2]}" Header="{x:Static p:Lang.Settings_TabItem}" FontSize="13">
                 <Grid Background="#FFE5E5E5">
                     <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="{x:Static p:Lang.Language}" VerticalAlignment="Top"/>
                     <ComboBox HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="283" ItemsSource="{Binding ListOfLang}" SelectedIndex="{Binding SelectedLangItem}">
@@ -59,7 +92,7 @@
                     </ComboBox>
                 </Grid>
             </TabItem>
-            <TabItem DataContext="{Binding Children[2]}" Header="{x:Static p:Lang.About_TabItem}" FontSize="13">
+            <TabItem DataContext="{Binding Children[3]}" Header="{x:Static p:Lang.About_TabItem}" FontSize="13">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="278*"/>

@@ -279,4 +279,37 @@
   <data name="Virtualization" xml:space="preserve">
     <value>Wirtualizacja: </value>
   </data>
+  <data name="Registry_TabItem" xml:space="preserve">
+    <value>Rejestr</value>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Klucz</value>
+  </data>
+  <data name="RegistryClean" xml:space="preserve">
+    <value>Usuń wybrane wpisy</value>
+  </data>
+  <data name="RegistrySearch" xml:space="preserve">
+    <value>Szukaj zbędnych wpisów</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Wartość</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Dane</value>
+  </data>
+  <data name="ChooseElements" xml:space="preserve">
+    <value>Wybierz elementy:</value>
+  </data>
+  <data name="MissingDLL" xml:space="preserve">
+    <value>Brakujące odniesienia do DLL</value>
+  </data>
+  <data name="NonExistentSoftware" xml:space="preserve">
+    <value>Nieistniejące oprogramowanie</value>
+  </data>
+  <data name="MissingFiles" xml:space="preserve">
+    <value>Brakujące pliki</value>
+  </data>
+  <data name="MissingMUI" xml:space="preserve">
+    <value>Brakujące odniesienie MUI</value>
+  </data>
 </root>

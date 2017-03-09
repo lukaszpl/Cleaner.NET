@@ -23,6 +23,7 @@ namespace Cleaner.NET.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
         public CleanerTabViewModel cleanerTabViewModel;
+        public RegistryTabViewModel registryTabViewModel;
         public SettingsTabViewModel settingsTabViewModel;
         public AboutTabViewModel aboutTabViewModel;
         #region private fields/GUI
@@ -44,6 +45,7 @@ namespace Cleaner.NET.ViewModel
             LoadPlugins();
             _children = new ObservableCollection<object>();
             _children.Add(cleanerTabViewModel =  new CleanerTabViewModel(this));
+            _children.Add(registryTabViewModel = new RegistryTabViewModel(this));
             _children.Add(settingsTabViewModel = new SettingsTabViewModel(this));
             _children.Add(aboutTabViewModel = new AboutTabViewModel(this));
             Settings.Load(this);

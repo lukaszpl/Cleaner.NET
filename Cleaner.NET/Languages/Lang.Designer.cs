@@ -106,6 +106,15 @@ namespace Cleaner.NET.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose elements:.
+        /// </summary>
+        public static string ChooseElements {
+            get {
+                return ResourceManager.GetString("ChooseElements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clean.
         /// </summary>
         public static string Clean_Button {
@@ -160,6 +169,15 @@ namespace Cleaner.NET.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string Data {
+            get {
+                return ResourceManager.GetString("Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cache DNS will be deleted .
         /// </summary>
         public static string FlushDns {
@@ -196,6 +214,15 @@ namespace Cleaner.NET.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key.
+        /// </summary>
+        public static string Key {
+            get {
+                return ResourceManager.GetString("Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language:.
         /// </summary>
         public static string Language {
@@ -214,6 +241,33 @@ namespace Cleaner.NET.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Missing reference to the DLL.
+        /// </summary>
+        public static string MissingDLL {
+            get {
+                return ResourceManager.GetString("MissingDLL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing files.
+        /// </summary>
+        public static string MissingFiles {
+            get {
+                return ResourceManager.GetString("MissingFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing MUI reference.
+        /// </summary>
+        public static string MissingMUI {
+            get {
+                return ResourceManager.GetString("MissingMUI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string MsgError {
@@ -228,6 +282,15 @@ namespace Cleaner.NET.Languages {
         public static string MsgWarning {
             get {
                 return ResourceManager.GetString("MsgWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non-existent Software.
+        /// </summary>
+        public static string NonExistentSoftware {
+            get {
+                return ResourceManager.GetString("NonExistentSoftware", resourceCulture);
             }
         }
         
@@ -282,6 +345,33 @@ namespace Cleaner.NET.Languages {
         public static string RecycleBin_CheckBox {
             get {
                 return ResourceManager.GetString("RecycleBin_CheckBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registry.
+        /// </summary>
+        public static string Registry_TabItem {
+            get {
+                return ResourceManager.GetString("Registry_TabItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete selected entries.
+        /// </summary>
+        public static string RegistryClean {
+            get {
+                return ResourceManager.GetString("RegistryClean", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search unnecessary entries.
+        /// </summary>
+        public static string RegistrySearch {
+            get {
+                return ResourceManager.GetString("RegistrySearch", resourceCulture);
             }
         }
         
@@ -363,6 +453,15 @@ namespace Cleaner.NET.Languages {
         public static string User {
             get {
                 return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
             }
         }
         
