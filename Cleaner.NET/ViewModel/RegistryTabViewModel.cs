@@ -101,7 +101,7 @@ namespace Cleaner.NET.ViewModel
             }
             if(MissingFiles)
             {
-                RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_NT_CurrentVersion_AppCompatFlags_Compatibility_Assistant_Store());
+                RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_NT_CurrentVersion_AppCompatFlags_Compatibility_Assistant());
                 foreach (RegistryItem item in regItems)
                     ListOfRegKeys.Add(new RegistryListItem(false, true, item.Key, item.Value, item.ValueData));
             }

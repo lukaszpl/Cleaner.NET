@@ -34,13 +34,28 @@ namespace Cleaner .NET
         {
             //delete only value
             RegistryKey rkey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\SharedDLLs");
-            return GetRegItemsForMissingFiles(rkey);
+            if(rkey != null)
+                return GetRegItemsForMissingFiles(rkey);
+            return null;
         }
-        public static RegistryItem[] HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_NT_CurrentVersion_AppCompatFlags_Compatibility_Assistant_Store()
+        public static RegistryItem[] HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_NT_CurrentVersion_AppCompatFlags_Compatibility_Assistant()
         {
             //delete only value
+            List<RegistryItem> regItems = new List<RegistryItem>();
+           
             RegistryKey rkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store");
-            return GetRegItemsForMissingFiles(rkey);
+            if(rkey != null)
+            {
+                foreach (RegistryItem item in GetRegItemsForMissingFiles(rkey))
+                    regItems.Add(item);
+            }
+            RegistryKey rkey2 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Persisted");
+            if(rkey2 != null)
+            {
+                foreach (RegistryItem item in GetRegItemsForMissingFiles(rkey2))
+                    regItems.Add(item);
+            }
+            return regItems.ToArray();
         }
         public static void DeleteKey(string key)
         {
