@@ -53,6 +53,7 @@
     <CodeAnalysisRuleSet />
     <DocumentationFile>
     </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>Cleaner.NET.App</StartupObject>

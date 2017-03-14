@@ -106,6 +106,15 @@ namespace Cleaner.NET.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cache MUI.
+        /// </summary>
+        public static string CacheMUI {
+            get {
+                return ResourceManager.GetString("CacheMUI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose elements:.
         /// </summary>
         public static string ChooseElements {

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:p="clr-namespace:Cleaner.NET.Languages"
-        Title="Cleaner .NET" Height="550.296" Width="972.359" MinWidth="700" MinHeight="450" Icon="Resources/ico.ico">
+        Title="Cleaner .NET" Height="578.296" Width="1084.359" MinWidth="700" MinHeight="450" Icon="Resources/ico.ico">
     <Window.Background>
         <LinearGradientBrush EndPoint="460.833,470.667" StartPoint="460.833,0" MappingMode="Absolute">
             <GradientStop Color="#FF0095B6" Offset="0"/>
@@ -54,7 +54,8 @@
                             <TextBlock TextWrapping="Wrap" Text="{x:Static p:Lang.ChooseElements}" FontWeight="Bold"/>
                             <CheckBox Content="{x:Static p:Lang.NonExistentSoftware}" IsChecked="{Binding MissingSoftIsChecked}"/>
                             <CheckBox Content="{x:Static p:Lang.MissingDLL}" IsChecked="{Binding MissingDLLIsChecked}"/>
-                            <CheckBox Content="{x:Static p:Lang.MissingFiles}" IsChecked="{Binding MissingFiles}"/>
+                            <CheckBox Content="{x:Static p:Lang.MissingFiles}" IsChecked="{Binding MissingFilesIsChecked}"/>
+                            <CheckBox Content="{x:Static p:Lang.CacheMUI}" IsChecked="{Binding MissingMUIIsChecked}"/>
                         </ItemsControl>
                     </ScrollViewer>
                     <ListView Margin="228,25,5,63" ItemsSource="{Binding ListOfRegKeys}" SelectionMode="Single">
@@ -70,7 +71,7 @@
                                     </GridViewColumn>
                                     <GridViewColumn Header="{x:Static p:Lang.Key}" Width="400" DisplayMemberBinding="{Binding Key}"/>
                                     <GridViewColumn  Header="{x:Static p:Lang.Value}" Width="200" DisplayMemberBinding="{Binding Value}"/>
-                                    <GridViewColumn  Header="{x:Static p:Lang.Data}" Width="400" DisplayMemberBinding="{Binding ValueData}"/>
+                                    <GridViewColumn  Header="{x:Static p:Lang.Data}" Width="200" DisplayMemberBinding="{Binding ValueData}"/>
                                 </GridView.Columns>
                             </GridView>
                         </ListView.View>

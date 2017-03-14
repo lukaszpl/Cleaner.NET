@@ -17,8 +17,8 @@ namespace Cleaner.NET.ViewModel
         private bool _ProgressBarIsIndeterminate;
         private bool _MissingSoftIsChecked = true;
         private bool _MissingDLLIsChecked = true;
-        private bool _MissingFiles = true;
-        private bool _MissingMUI = true;
+        private bool _MissingFilesIsChecked = true;
+        private bool _MissingMUIIsChecked = true;
 
         public ObservableCollection<RegistryListItem> ListOfRegKeys
         {
@@ -40,15 +40,15 @@ namespace Cleaner.NET.ViewModel
             get { return _MissingDLLIsChecked; }
             set { Set(() => MissingDLLIsChecked, ref _MissingDLLIsChecked, value); }
         }
-        public bool MissingFiles
+        public bool MissingFilesIsChecked
         {
-            get { return _MissingFiles; }
-            set { Set(() => MissingFiles, ref _MissingFiles, value); }
+            get { return _MissingFilesIsChecked; }
+            set { Set(() => MissingFilesIsChecked, ref _MissingFilesIsChecked, value); }
         }
-        public bool MissingMUI
+        public bool MissingMUIIsChecked
         {
-            get { return _MissingMUI; }
-            set { Set(() => MissingMUI, ref _MissingMUI, value); }
+            get { return _MissingMUIIsChecked; }
+            set { Set(() => MissingMUIIsChecked, ref _MissingMUIIsChecked, value); }
         }
         public RegistryTabViewModel(MainWindowViewModel mainWindowViewModel)
         {
@@ -99,9 +99,15 @@ namespace Cleaner.NET.ViewModel
                 foreach (RegistryItem item in regItems)
                     ListOfRegKeys.Add(new RegistryListItem(false, true, item.Key, item.Value, item.ValueData));
             }
-            if(MissingFiles)
+            if(MissingFilesIsChecked)
             {
                 RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_NT_CurrentVersion_AppCompatFlags_Compatibility_Assistant());
+                foreach (RegistryItem item in regItems)
+                    ListOfRegKeys.Add(new RegistryListItem(false, true, item.Key, item.Value, item.ValueData));
+            }
+            if (MissingMUIIsChecked)
+            {
+                RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache());
                 foreach (RegistryItem item in regItems)
                     ListOfRegKeys.Add(new RegistryListItem(false, true, item.Key, item.Value, item.ValueData));
             }

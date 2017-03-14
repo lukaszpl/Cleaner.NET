@@ -312,4 +312,7 @@
   <data name="MissingMUI" xml:space="preserve">
     <value>Brakujące odniesienie MUI</value>
   </data>
+  <data name="CacheMUI" xml:space="preserve">
+    <value>Cache MUI</value>
+  </data>
 </root>
