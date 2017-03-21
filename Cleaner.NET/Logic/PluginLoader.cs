@@ -20,6 +20,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using PluginTemplate;
 
 namespace Cleaner.NET
 {
@@ -27,7 +28,7 @@ namespace Cleaner.NET
     {
         private Assembly DLL;
         private int CleanerNetVersion = 1;
-        dynamic c;
+        IPlugin plugin;
         public bool IsWorking;
 
         public string PluginName;
@@ -39,10 +40,11 @@ namespace Cleaner.NET
                 DLL = Assembly.LoadFile(path);
                 foreach (Type type in DLL.GetExportedTypes())
                 {
-                    c = Activator.CreateInstance(type);
+                    if(type.GetInterface(typeof(IPlugin).Name)!=null)
+                        plugin = (IPlugin)Activator.CreateInstance(type);
                 }
-                PluginName = c.PluginName;
-                if (CleanerNetVersion != c.CleanerNetVersion)
+                PluginName = plugin.PluginName;
+                if (CleanerNetVersion != plugin.CleanerNetVersion)
                 {
                     MessageBoxResult result =  MessageBox.Show(Languages.Lang.OutOfDatePlugin + "\n" + path, Languages.Lang.MsgWarning, MessageBoxButton.YesNo, MessageBoxImage.Warning);
                     if (result == MessageBoxResult.Yes)
@@ -62,25 +64,15 @@ namespace Cleaner.NET
 
         public List<object> GetGUIElements()
         {
-            List<object> list = new List<object>();
-            try
-            {
-                list = c.GUIElements();
-            }
-            catch
-            {
-                return null;
-            }
-            return list;
+            return plugin.GUIElements();
         }
 
         public string CallPluginMethod(CheckBox checkBox, bool DoClean, Dispatcher dispatcher, CultureInfo cultureInfo)
         {
             string output = null;
-            output = c.PluginMethod(checkBox, DoClean, dispatcher, cultureInfo);
+            output = plugin.PluginMethod(checkBox, DoClean, dispatcher, cultureInfo);
             return output;
         }
-
 
         /* static */
         public static string[] GetPathToPlugins()
@@ -88,7 +80,7 @@ namespace Cleaner.NET
             List<string> listOfPaths = new List<string>();
             string PluginPath = System.IO.Directory.GetCurrentDirectory() + "\\plugins";
             if (Directory.Exists(PluginPath)){
-                foreach (string pathtofile in Directory.GetFiles(PluginPath))
+                foreach (string pathtofile in Directory.GetFiles(PluginPath, "*.dll"))
                     listOfPaths.Add(pathtofile);
             }
             return listOfPaths.ToArray();
