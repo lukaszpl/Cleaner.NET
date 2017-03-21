@@ -69,9 +69,7 @@ namespace Cleaner.NET
 
         public string CallPluginMethod(CheckBox checkBox, bool DoClean, Dispatcher dispatcher, CultureInfo cultureInfo)
         {
-            string output = null;
-            output = plugin.PluginMethod(checkBox, DoClean, dispatcher, cultureInfo);
-            return output;
+            return plugin.PluginMethod(checkBox, DoClean, dispatcher, cultureInfo);
         }
 
         /* static */
