@@ -24,12 +24,13 @@ namespace Cleaner.NET
 {
     public class Settings
     {
+        static XmlReader xmlReader;
         public static void Load(MainWindowViewModel vm)
         {          
             string path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
             if (File.Exists(path))
             {
-                XmlReader xmlReader = new XmlReader();
+                xmlReader = new XmlReader();
                 xmlReader.LoadFile(path);
 
                 //
@@ -56,6 +57,14 @@ namespace Cleaner.NET
             }
         }
 
+        private static void LoadRegistryCheckBoxes(MainWindowViewModel vm)
+        {
+            vm.registryTabViewModel.MissingDLLIsChecked = Convert.ToBoolean(xmlReader.GetSettingByName("MissingSoftIsChecked"));
+            vm.registryTabViewModel.MissingFilesIsChecked = Convert.ToBoolean(xmlReader.GetSettingByName("MissingDLLIsChecked"));
+            vm.registryTabViewModel.MissingMUIIsChecked = Convert.ToBoolean(xmlReader.GetSettingByName("MissingFilesIsChecked"));
+            vm.registryTabViewModel.MissingSoftIsChecked = Convert.ToBoolean(xmlReader.GetSettingByName("MissingMUIIsChecked"));
+        }
+
         public static void Save(MainWindowViewModel vm)
         {
             //add lang setting
@@ -77,20 +86,16 @@ namespace Cleaner.NET
             AppSettings.Default.Save();
             AppSettings.Default.Properties.Clear();
         }
-        private static void LoadRegistryCheckBoxes(MainWindowViewModel vm)
-        {
-            vm.registryTabViewModel.MissingDLLIsChecked = AppSettings.Default.MissingDLLIsChecked;
-            vm.registryTabViewModel.MissingFilesIsChecked = AppSettings.Default.MissingFilesIsChecked;
-            vm.registryTabViewModel.MissingMUIIsChecked = AppSettings.Default.MissingMUIIsChecked;
-            vm.registryTabViewModel.MissingSoftIsChecked = AppSettings.Default.MissingSoftIsChecked;
-        }
+
         private static void SaveRegistryCheckBoxes(MainWindowViewModel vm)
         {
-            AppSettings.Default.MissingDLLIsChecked = vm.registryTabViewModel.MissingDLLIsChecked;
-            AppSettings.Default.MissingFilesIsChecked = vm.registryTabViewModel.MissingFilesIsChecked;
-            AppSettings.Default.MissingMUIIsChecked = vm.registryTabViewModel.MissingMUIIsChecked;
-            AppSettings.Default.MissingSoftIsChecked = vm.registryTabViewModel.MissingSoftIsChecked;           
+            //add settings
+            AppSettings.Default[AddSettingItem("MissingSoftIsChecked", typeof(bool)).Name] = vm.registryTabViewModel.MissingDLLIsChecked;
+            AppSettings.Default[AddSettingItem("MissingDLLIsChecked", typeof(bool)).Name] = vm.registryTabViewModel.MissingFilesIsChecked;
+            AppSettings.Default[AddSettingItem("MissingFilesIsChecked", typeof(bool)).Name] = vm.registryTabViewModel.MissingMUIIsChecked;
+            AppSettings.Default[AddSettingItem("MissingMUIIsChecked", typeof(bool)).Name] = vm.registryTabViewModel.MissingSoftIsChecked;
         }
+
         private static void SaveCheckBoxes(ObservableCollection<object> obj)
         {
             foreach (object item in obj)
@@ -98,17 +103,21 @@ namespace Cleaner.NET
                 CheckBox a = item as CheckBox;
                 if (a != null)
                 {
-                    System.Configuration.SettingsProperty property = new System.Configuration.SettingsProperty(a.Name);
-                    property.DefaultValue = true;
-                    property.IsReadOnly = false;
-                    property.PropertyType = typeof(bool);
-                    property.Provider = AppSettings.Default.Providers["LocalFileSettingsProvider"];
-                    property.Attributes.Add(typeof(System.Configuration.UserScopedSettingAttribute), new System.Configuration.UserScopedSettingAttribute());
-                    AppSettings.Default.Properties.Add(property);
-                    AppSettings.Default[a.Name] = a.IsChecked;
-                    property = null;
+                    AppSettings.Default[AddSettingItem(a.Name, typeof(bool)).Name] = a.IsChecked;
                 }
             }
+        }
+
+        private static SettingsProperty AddSettingItem(string Name, Type type)
+        {
+            System.Configuration.SettingsProperty Property = new System.Configuration.SettingsProperty(Name);
+            Property.DefaultValue = true;
+            Property.IsReadOnly = false;
+            Property.PropertyType = type;
+            Property.Provider = AppSettings.Default.Providers["LocalFileSettingsProvider"];
+            Property.Attributes.Add(typeof(System.Configuration.UserScopedSettingAttribute), new System.Configuration.UserScopedSettingAttribute());
+            AppSettings.Default.Properties.Add(Property);
+            return Property;
         }
     }
 }

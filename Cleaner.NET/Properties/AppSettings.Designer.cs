@@ -13,7 +13,7 @@ namespace Cleaner.NET.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.0.1.0")]
-    internal sealed partial class AppSettings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class AppSettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static AppSettings defaultInstance = ((AppSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new AppSettings())));
         
@@ -26,48 +26,12 @@ namespace Cleaner.NET.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool MissingSoftIsChecked {
+        public bool Setting {
             get {
-                return ((bool)(this["MissingSoftIsChecked"]));
+                return ((bool)(this["Setting"]));
             }
             set {
-                this["MissingSoftIsChecked"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool MissingDLLIsChecked {
-            get {
-                return ((bool)(this["MissingDLLIsChecked"]));
-            }
-            set {
-                this["MissingDLLIsChecked"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool MissingFilesIsChecked {
-            get {
-                return ((bool)(this["MissingFilesIsChecked"]));
-            }
-            set {
-                this["MissingFilesIsChecked"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool MissingMUIIsChecked {
-            get {
-                return ((bool)(this["MissingMUIIsChecked"]));
-            }
-            set {
-                this["MissingMUIIsChecked"] = value;
+                this["Setting"] = value;
             }
         }
     }

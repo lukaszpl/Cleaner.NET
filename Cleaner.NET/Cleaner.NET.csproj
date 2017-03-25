@@ -169,11 +169,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Properties\App.config" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\AppSettings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config">
