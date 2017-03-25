@@ -168,6 +168,7 @@
       <LastGenOutput>Lang.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
     </None>

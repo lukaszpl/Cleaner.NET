@@ -79,6 +79,7 @@ namespace Cleaner.NET
             CheckBox checkBox = new CheckBox();
             checkBox.Name = "CleanTempFiles";
             checkBox.FontWeight = FontWeights.Normal;
+            checkBox.IsChecked = true;
             checkBox.Content = Languages.Lang.Temp_CheckBox;
             return checkBox;
         }
@@ -87,6 +88,7 @@ namespace Cleaner.NET
             CheckBox checkBox = new CheckBox();
             checkBox.Name = "CleanWinErrors";
             checkBox.FontWeight = FontWeights.Normal;
+            checkBox.IsChecked = true;
             checkBox.Content = Languages.Lang.WinErrors_CheckBox;
             return checkBox;
         }
@@ -95,6 +97,7 @@ namespace Cleaner.NET
             CheckBox checkBox = new CheckBox();
             checkBox.Name = "CleanFontCache";
             checkBox.FontWeight = FontWeights.Normal;
+            checkBox.IsChecked = true;
             checkBox.Content = Languages.Lang.TempFont_CheckBox;
             return checkBox;
         }
@@ -103,6 +106,7 @@ namespace Cleaner.NET
             CheckBox checkBox = new CheckBox();
             checkBox.Name = "CleanCacheDNS";
             checkBox.FontWeight = FontWeights.Normal;
+            checkBox.IsChecked = true;
             checkBox.Content = Languages.Lang.TempDns_CheckBox;
             return checkBox;
         }
@@ -111,6 +115,7 @@ namespace Cleaner.NET
             CheckBox checkBox = new CheckBox();
             checkBox.Name = "CleanClipboard";
             checkBox.FontWeight = FontWeights.Normal;
+            checkBox.IsChecked = true;
             checkBox.Content = Languages.Lang.Clipboard_CheckBox;
             return checkBox;
         }
@@ -119,6 +124,7 @@ namespace Cleaner.NET
             CheckBox checkBox = new CheckBox();
             checkBox.Name = "CleanTrash";
             checkBox.FontWeight = FontWeights.Normal;
+            checkBox.IsChecked = true;
             checkBox.Content = Languages.Lang.RecycleBin_CheckBox;
             return checkBox;
         }
@@ -127,6 +133,7 @@ namespace Cleaner.NET
             CheckBox checkBox = new CheckBox();
             checkBox.Name = "CleanRecentDocuments";
             checkBox.FontWeight = FontWeights.Normal;
+            checkBox.IsChecked = true;
             checkBox.Content = Languages.Lang.Recentdoc_CheckBox;
             return checkBox;
         }
@@ -135,6 +142,7 @@ namespace Cleaner.NET
             CheckBox checkBox = new CheckBox();
             checkBox.Name = "CleanThubCache";
             checkBox.FontWeight = FontWeights.Normal;
+            checkBox.IsChecked = true;
             checkBox.Content = Languages.Lang.ThumbnailsCache_CheckBox;
             return checkBox;
         }

@@ -50,7 +50,9 @@ namespace Cleaner.NET
                         if(!(bool)a.IsChecked)
                             a.IsChecked = Convert.ToBoolean(xmlReader.GetSettingByName(a.Name));
                     }
-                }               
+                }
+                //for registry tab
+                LoadRegistryCheckBoxes(vm);
             }
         }
 
@@ -69,11 +71,26 @@ namespace Cleaner.NET
             SaveCheckBoxes(vm.cleanerTabViewModel.ListOfWindowsElements);
             //for plugins
             SaveCheckBoxes(vm.cleanerTabViewModel.ListOfOtherElemets);
-
+            //for registry tab
+            SaveRegistryCheckBoxes(vm);
+            //
             AppSettings.Default.Save();
             AppSettings.Default.Properties.Clear();
         }
-
+        private static void LoadRegistryCheckBoxes(MainWindowViewModel vm)
+        {
+            vm.registryTabViewModel.MissingDLLIsChecked = AppSettings.Default.MissingDLLIsChecked;
+            vm.registryTabViewModel.MissingFilesIsChecked = AppSettings.Default.MissingFilesIsChecked;
+            vm.registryTabViewModel.MissingMUIIsChecked = AppSettings.Default.MissingMUIIsChecked;
+            vm.registryTabViewModel.MissingSoftIsChecked = AppSettings.Default.MissingSoftIsChecked;
+        }
+        private static void SaveRegistryCheckBoxes(MainWindowViewModel vm)
+        {
+            AppSettings.Default.MissingDLLIsChecked = vm.registryTabViewModel.MissingDLLIsChecked;
+            AppSettings.Default.MissingFilesIsChecked = vm.registryTabViewModel.MissingFilesIsChecked;
+            AppSettings.Default.MissingMUIIsChecked = vm.registryTabViewModel.MissingMUIIsChecked;
+            AppSettings.Default.MissingSoftIsChecked = vm.registryTabViewModel.MissingSoftIsChecked;           
+        }
         private static void SaveCheckBoxes(ObservableCollection<object> obj)
         {
             foreach (object item in obj)
