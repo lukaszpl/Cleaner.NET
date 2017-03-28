@@ -264,4 +264,13 @@
   <data name="CacheMUI" xml:space="preserve">
     <value>Cache MUI</value>
   </data>
+  <data name="OperateCanceledByUser" xml:space="preserve">
+    <value>Operation canceled by user</value>
+  </data>
+  <data name="regCleanerWarning" xml:space="preserve">
+    <value>All selected items have not been deleted</value>
+  </data>
+  <data name="FileNotExist" xml:space="preserve">
+    <value>File not exist:</value>
+  </data>
 </root>

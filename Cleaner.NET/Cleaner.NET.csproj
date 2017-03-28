@@ -210,6 +210,10 @@
       <Project>{85f7c88d-5d50-4dbe-9b44-419ecb5f3b49}</Project>
       <Name>PluginTemplate</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RegCleaner\RegCleaner.csproj">
+      <Project>{9ee97393-4968-4c79-8c3b-e6a7580847fd}</Project>
+      <Name>RegCleaner</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

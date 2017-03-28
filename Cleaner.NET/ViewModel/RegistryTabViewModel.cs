@@ -14,8 +14,13 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA */
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Cleaner.NET.ViewModel
@@ -75,25 +80,67 @@ namespace Cleaner.NET.ViewModel
         {
             mainWindowViewModel.TabControlIsEnabled = false;
             ProgressBarIsIndeterminate = true;
-            
+
+            string toExecute = null;
             foreach(RegistryListItem item in ListOfRegKeys)
             {
                 if (item.IsChecked)
                 {
-                    if (item.DeleteKeyWithValue)
-                        await Task.Run(() => WindowsRegistryCleaner.DeleteKey(item.Key));
+                    if (item.DeleteFullKey)
+                        toExecute += " -DeleteKey " + "\"" + item.Key + "\"";
                     else
-                        await Task.Run(() => WindowsRegistryCleaner.DeleteValue(item.Key, item.Value));  
+                        toExecute += " -DeleteValue \"" + item.Key + "\" \"" + item.Value + "\"";
                 }
             }
-            for (int i = ListOfRegKeys.Count; i > 0; i--)
+
+            if (toExecute != null)
             {
-                if(ListOfRegKeys[i - 1].IsChecked)
-                    ListOfRegKeys.Remove(ListOfRegKeys[i - 1]);
+                bool result = await StartRegCleaner(toExecute);
+                if (result)
+                {
+                    for (int i = ListOfRegKeys.Count; i > 0; i--)
+                    {
+                        if (ListOfRegKeys[i - 1].IsChecked)
+                            ListOfRegKeys.Remove(ListOfRegKeys[i - 1]);
+                    }
+                }
             }
 
             mainWindowViewModel.TabControlIsEnabled = true;
             ProgressBarIsIndeterminate = false;
+        }
+        private async Task<bool> StartRegCleaner(string toExecute)
+        {
+            Process regCleaner = new Process();
+            regCleaner.StartInfo.FileName = "RegCleaner.exe";
+            regCleaner.StartInfo.Arguments = toExecute;
+            regCleaner.StartInfo.CreateNoWindow = true;
+            if (File.Exists(regCleaner.StartInfo.FileName)){
+                try {
+                    regCleaner.Start();
+                    await Task.Run(() => regCleaner.WaitForExit());
+                    if (regCleaner.ExitCode == 1)
+                    {
+                        MessageBox.Show(Languages.Lang.regCleanerWarning, Languages.Lang.MsgWarning, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else if (regCleaner.ExitCode == 0)
+                        return true;
+                    return false;
+                }
+                catch (Win32Exception)
+                {
+                    // if canceled by user
+                    MessageBox.Show(Languages.Lang.OperateCanceledByUser, Languages.Lang.MsgError, MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.ToString(), Languages.Lang.MsgError, MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+            }else
+                MessageBox.Show(Languages.Lang.FileNotExist + regCleaner.StartInfo.FileName, Languages.Lang.MsgError, MessageBoxButton.OK, MessageBoxImage.Error);
+            return false;
         }
 
         private async void AnalyzeMethod()
@@ -133,16 +180,16 @@ namespace Cleaner.NET.ViewModel
     public class RegistryListItem
     {
         /* delete key or only value in key */
-        public bool DeleteKeyWithValue { get; set; }
+        public bool DeleteFullKey { get; set; }
         /*  */
         public bool IsChecked { get; set; }
         public string Key { get; set; }
         public string Value {get; set; }
         public string ValueData { get; set; }
 
-        public RegistryListItem(bool DeleteKeyWithValue, bool IsChecked, string Key, string Value, string ValueData)
+        public RegistryListItem(bool DeleteFullKey, bool IsChecked, string Key, string Value, string ValueData)
         {
-            this.DeleteKeyWithValue = DeleteKeyWithValue;
+            this.DeleteFullKey= DeleteFullKey;
             this.IsChecked = IsChecked;
             this.Key = Key;
             this.Value = Value;

@@ -139,21 +139,6 @@ namespace Cleaner .NET
             return result.ToArray();
         }
 
-        public static void DeleteKey(string key)
-        {
-            string _key = key.Substring((key.IndexOf(@"\") + 1));
-            string _keyWithOutSubKey = _key.Remove(_key.LastIndexOf(@"\"));
-            string _subKeyName = _key.Substring(_key.LastIndexOf(@"\") + 1);        
-            RegistryKey rkey = GetMasterKeyByName(key).OpenSubKey(_keyWithOutSubKey, true);
-            rkey.DeleteSubKey(_subKeyName);
-        }
-
-        public static void DeleteValue(string key, string value)
-        {
-            RegistryKey rkey = GetMasterKeyByName(key).OpenSubKey(key.Substring((key.IndexOf(@"\") + 1)), true);
-            rkey.DeleteValue(value);
-        }        
-
         /* Only use with subkeys, what value is path to files */
         private static RegistryItem[] GetRegItemsForMissingFiles(RegistryKey rKey)
         {            
@@ -182,22 +167,6 @@ namespace Cleaner .NET
                 }
             }
             return result.ToArray();
-        }
-
-        private static RegistryKey GetMasterKeyByName(string name)
-        {
-            string key = name.Remove(name.IndexOf(@"\"));
-            if (key == "HKEY_CLASSES_ROOT")
-                return Registry.ClassesRoot;
-            if (key == "HKEY_CURRENT_USER")
-                return Registry.CurrentUser;
-            if (key == "HKEY_LOCAL_MACHINE")
-                return Registry.LocalMachine;
-            if (key == "HKEY_USERS")
-                return Registry.Users;
-            if (key == "HKEY_CURRENT_CONFIG")
-                return Registry.CurrentConfig;
-            return null;         
         }
     }
 

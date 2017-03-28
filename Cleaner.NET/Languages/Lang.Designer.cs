@@ -187,6 +187,15 @@ namespace Cleaner.NET.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File not exist:.
+        /// </summary>
+        public static string FileNotExist {
+            get {
+                return ResourceManager.GetString("FileNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cache DNS will be deleted .
         /// </summary>
         public static string FlushDns {
@@ -304,6 +313,15 @@ namespace Cleaner.NET.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation canceled by user.
+        /// </summary>
+        public static string OperateCanceledByUser {
+            get {
+                return ResourceManager.GetString("OperateCanceledByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other.
         /// </summary>
         public static string Other_TabItem {
@@ -354,6 +372,15 @@ namespace Cleaner.NET.Languages {
         public static string RecycleBin_CheckBox {
             get {
                 return ResourceManager.GetString("RecycleBin_CheckBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All selected items have not been deleted.
+        /// </summary>
+        public static string regCleanerWarning {
+            get {
+                return ResourceManager.GetString("regCleanerWarning", resourceCulture);
             }
         }
         
