@@ -87,7 +87,7 @@ namespace Cleaner.NET.ViewModel
                 if (item.IsChecked)
                 {
                     if (item.DeleteFullKey)
-                        toExecute += " -DeleteKey " + "\"" + item.Key + "\"";
+                        toExecute += " -DeleteKey \"" + item.Key + "\"";
                     else
                         toExecute += " -DeleteValue \"" + item.Key + "\" \"" + item.Value + "\"";
                 }
@@ -120,9 +120,7 @@ namespace Cleaner.NET.ViewModel
                     regCleaner.Start();
                     await Task.Run(() => regCleaner.WaitForExit());
                     if (regCleaner.ExitCode == 1)
-                    {
                         MessageBox.Show(Languages.Lang.regCleanerWarning, Languages.Lang.MsgWarning, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
                     else if (regCleaner.ExitCode == 0)
                         return true;
                     return false;
