@@ -324,4 +324,10 @@
   <data name="FileNotExist" xml:space="preserve">
     <value>Plik nie istnieje: </value>
   </data>
+  <data name="InvalidFileExtensions" xml:space="preserve">
+    <value>Nieprawidłowe rozszerzenia plików</value>
+  </data>
+  <data name="ReferencesToTheInstaller" xml:space="preserve">
+    <value>Brakujące odniesienia do instalatora</value>
+  </data>
 </root>

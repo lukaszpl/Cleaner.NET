@@ -38,6 +38,8 @@ namespace Cleaner.NET.ViewModel
         private bool _MissingDLLIsChecked = true;
         private bool _MissingFilesIsChecked = true;
         private bool _MissingMUIIsChecked = true;
+        private bool _InvalidFileExtensionsIsChecked = true;
+        private bool _ReferencesToTheInstallerIsChecked = true;
 
         public ObservableCollection<RegistryListItem> ListOfRegKeys
         {
@@ -69,6 +71,16 @@ namespace Cleaner.NET.ViewModel
             get { return _MissingMUIIsChecked; }
             set { Set(() => MissingMUIIsChecked, ref _MissingMUIIsChecked, value); }
         }
+        public bool InvalidFileExtensionsIsChecked
+        {
+            get { return _InvalidFileExtensionsIsChecked; }
+            set { Set(() => InvalidFileExtensionsIsChecked, ref _InvalidFileExtensionsIsChecked, value); }
+        }
+        public bool ReferencesToTheInstallerIsChecked
+        {
+            get { return _ReferencesToTheInstallerIsChecked; }
+            set { Set(() => ReferencesToTheInstallerIsChecked, ref _ReferencesToTheInstallerIsChecked, value); }
+        }
         public RegistryTabViewModel(MainWindowViewModel mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
@@ -86,10 +98,16 @@ namespace Cleaner.NET.ViewModel
             {
                 if (item.IsChecked)
                 {
+                    string value = item.Value;
+                    if(value != null)
+                        //if end of ValueName is "\" char
+                        if (value.LastIndexOf(@"\") == value.Length - 1)
+                            value += @"\";
+                    //
                     if (item.DeleteFullKey)
                         toExecute += " -DeleteKey \"" + item.Key + "\"";
                     else
-                        toExecute += " -DeleteValue \"" + item.Key + "\" \"" + item.Value + "\"";
+                        toExecute += " -DeleteValue \"" + item.Key + "\" \"" + value + "\"";
                 }
             }
 
@@ -167,6 +185,18 @@ namespace Cleaner.NET.ViewModel
             if (MissingMUIIsChecked)
             {
                 RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache());
+                foreach (RegistryItem item in regItems)
+                    ListOfRegKeys.Add(new RegistryListItem(false, true, item.Key, item.Value, item.ValueData));
+            }
+            if(InvalidFileExtensionsIsChecked)
+            {
+                RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_CurrentVersion_Explorer_FileExts());
+                foreach (RegistryItem item in regItems)
+                    ListOfRegKeys.Add(new RegistryListItem(true, true, item.Key, item.Value, item.ValueData));
+            }
+            if (ReferencesToTheInstallerIsChecked)
+            {
+                RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders());
                 foreach (RegistryItem item in regItems)
                     ListOfRegKeys.Add(new RegistryListItem(false, true, item.Key, item.Value, item.ValueData));
             }

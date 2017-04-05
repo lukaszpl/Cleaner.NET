@@ -126,7 +126,7 @@ namespace Cleaner .NET
         private static RegistryItem[] HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache_Method(RegistryKey rkey)
         {
             List<RegistryItem> result = new List<RegistryItem>();
-            foreach (RegistryItem item in GetRegistryItems(rkey))
+            foreach (RegistryItem item in GetRegistryValues(rkey))
             {
                 int index = item.Value.LastIndexOf(".");
                 if (index > 0)
@@ -139,11 +139,59 @@ namespace Cleaner .NET
             return result.ToArray();
         }
 
+        public static RegistryItem[] HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_CurrentVersion_Explorer_FileExts()
+        {
+            List<RegistryItem> result = new List<RegistryItem>();
+            RegistryKey rkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FileExts");
+            foreach (string key in rkey.GetSubKeyNames())
+            {
+                RegistryKey subKey = rkey.OpenSubKey(key);
+                bool toDelete = true;
+                foreach (string subKeyName in subKey.GetSubKeyNames())
+                {
+                    RegistryKey subKey2 = subKey.OpenSubKey(subKeyName);
+
+                    if (subKey2.GetValueNames().Length != 0)
+                        toDelete = false;
+                }
+                if (toDelete)
+                    result.Add(new RegistryItem(subKey.Name, null, null));
+            }
+            return result.ToArray();
+        }
+
+        public static RegistryItem[] HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders()
+        {
+            List<RegistryItem> result = new List<RegistryItem>();
+            if (Environment.Is64BitProcess)
+            {
+                RegistryKey rkey64 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\Folders");
+                result.AddRange(HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders_Method(rkey64));
+                RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Installer\Folders");
+                result.AddRange(HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders_Method(rkey32));
+            }
+            else
+            {
+                RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\Folders");
+                result.AddRange(HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders_Method(rkey32));
+            }
+            return result.ToArray();
+        }
+        private static RegistryItem[] HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders_Method(RegistryKey rkey)
+        {
+            List<RegistryItem> result = new List<RegistryItem>();
+            foreach (RegistryItem item in GetRegistryValues(rkey))
+            {
+                if (!Directory.Exists(item.Value))
+                    result.Add(item);
+            }
+            return result.ToArray();
+        }
         /* Only use with subkeys, what value is path to files */
         private static RegistryItem[] GetRegItemsForMissingFiles(RegistryKey rKey)
         {            
             List<RegistryItem> result = new List<RegistryItem>();
-            foreach (RegistryItem item in GetRegistryItems(rKey))
+            foreach (RegistryItem item in GetRegistryValues(rKey))
             {
                 if (!File.Exists(item.Value))
                     result.Add(new RegistryItem(rKey.Name, item.Value, Convert.ToString(Registry.GetValue(rKey.Name, item.Value, null))));
@@ -151,7 +199,7 @@ namespace Cleaner .NET
             return result.ToArray();
         }
 
-        private static RegistryItem[] GetRegistryItems(RegistryKey rKey)
+        private static RegistryItem[] GetRegistryValues(RegistryKey rKey)
         {
             List<RegistryItem> result = new List<RegistryItem>();
             if (rKey != null)
@@ -159,11 +207,7 @@ namespace Cleaner .NET
                 string[] values = rKey.GetValueNames();
                 foreach (string value in values)
                 {
-                    if ((value != null) && (value != ""))
-                    {
-                        if (!File.Exists(value))
-                            result.Add(new RegistryItem(rKey.Name, value, Convert.ToString(Registry.GetValue(rKey.Name, value, null))));
-                    }
+                    result.Add(new RegistryItem(rKey.Name, value, Convert.ToString(Registry.GetValue(rKey.Name, value, null))));
                 }
             }
             return result.ToArray();

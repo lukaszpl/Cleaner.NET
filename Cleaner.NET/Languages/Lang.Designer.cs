@@ -232,6 +232,15 @@ namespace Cleaner.NET.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid file extensions.
+        /// </summary>
+        public static string InvalidFileExtensions {
+            get {
+                return ResourceManager.GetString("InvalidFileExtensions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Key.
         /// </summary>
         public static string Key {
@@ -372,6 +381,15 @@ namespace Cleaner.NET.Languages {
         public static string RecycleBin_CheckBox {
             get {
                 return ResourceManager.GetString("RecycleBin_CheckBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing references to the installer.
+        /// </summary>
+        public static string ReferencesToTheInstaller {
+            get {
+                return ResourceManager.GetString("ReferencesToTheInstaller", resourceCulture);
             }
         }
         

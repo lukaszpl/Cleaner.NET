@@ -56,21 +56,25 @@ namespace Cleaner.NET
         {
             SetLang();
             double Size = 0;
-            string[] FilesPath = Directory.GetFiles(Path.GetTempPath(), "*", SearchOption.AllDirectories);
-            Size += DeleteFiles(FilesPath, DoClean);
-
-            DirectoryInfo di = new DirectoryInfo(Path.GetTempPath());
-            if (DoClean)
+            try
             {
-                foreach (DirectoryInfo dir in di.GetDirectories())
+                string[] FilesPath = Directory.GetFiles(Path.GetTempPath(), "*", SearchOption.AllDirectories);
+                Size += DeleteFiles(FilesPath, DoClean);
+
+                DirectoryInfo di = new DirectoryInfo(Path.GetTempPath());
+                if (DoClean)
                 {
-                    try
+                    foreach (DirectoryInfo dir in di.GetDirectories())
                     {
-                        dir.Delete(true);
+                        try
+                        {
+                            dir.Delete(true);
+                        }
+                        catch { }
                     }
-                    catch { }
                 }
             }
+            catch { }
             return  Languages.Lang.Temp_CheckBox + ": " + Size + " MB" + "\n\n";
         }
         public string CleanWinErrors(bool DoClean)

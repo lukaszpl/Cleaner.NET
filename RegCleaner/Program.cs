@@ -13,7 +13,6 @@
     along with Cleaner .NET; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA */
 using Microsoft.Win32;
-using System.Threading;
 
 namespace RegCleaner
 {
@@ -41,7 +40,7 @@ namespace RegCleaner
                 string _keyWithOutSubKey = _key.Remove(_key.LastIndexOf(@"\"));
                 string _subKeyName = _key.Substring(_key.LastIndexOf(@"\") + 1);
                 RegistryKey rkey = GetMasterKeyByName(key).OpenSubKey(_keyWithOutSubKey, true);
-                rkey.DeleteSubKey(_subKeyName);
+                rkey.DeleteSubKeyTree(_subKeyName);
                 return true;
             }
             catch
@@ -52,6 +51,7 @@ namespace RegCleaner
 
         private static bool DeleteValue(string key, string value)
         {
+            
             try
             {
                 RegistryKey rkey = GetMasterKeyByName(key).OpenSubKey(key.Substring((key.IndexOf(@"\") + 1)), true);
