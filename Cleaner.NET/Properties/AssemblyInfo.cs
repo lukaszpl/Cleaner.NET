@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Cleaner .NET")]
-[assembly: AssemblyCopyright("Łukasz Soroczyński ©  2016")]
+[assembly: AssemblyCopyright("Łukasz Soroczyński ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -93,7 +93,9 @@ namespace Cleaner.NET.ViewModel
             mainWindowViewModel.TabControlIsEnabled = false;
             ProgressBarIsIndeterminate = true;
 
-            string toExecute = null;
+            string toExecuteAsAdmin = null;
+            string toExecuteAsUser = null;
+
             foreach(RegistryListItem item in ListOfRegKeys)
             {
                 if (item.IsChecked)
@@ -105,20 +107,43 @@ namespace Cleaner.NET.ViewModel
                             value += @"\";
                     //
                     if (item.DeleteFullKey)
-                        toExecute += " -DeleteKey \"" + item.Key + "\"";
+                    {
+                        if (item.ReqAdminToModify)
+                            toExecuteAsAdmin += " -DeleteKey \"" + item.Key + "\"";
+                        else
+                            toExecuteAsUser += " -DeleteKey \"" + item.Key + "\"";
+                    }
                     else
-                        toExecute += " -DeleteValue \"" + item.Key + "\" \"" + value + "\"";
+                    {
+                        if(item.ReqAdminToModify)
+                            toExecuteAsAdmin += " -DeleteValue \"" + item.Key + "\" \"" + value + "\"";
+                        else
+                            toExecuteAsUser += " -DeleteValue \"" + item.Key + "\" \"" + value + "\"";
+                    }
                 }
             }
 
-            if (toExecute != null)
+            if (toExecuteAsUser != null)
             {
-                bool result = await StartRegCleaner(toExecute);
+                bool result = await StartRegCleaner(false, toExecuteAsUser);
                 if (result)
                 {
                     for (int i = ListOfRegKeys.Count; i > 0; i--)
                     {
-                        if (ListOfRegKeys[i - 1].IsChecked)
+                        if ((ListOfRegKeys[i - 1].IsChecked) && (!ListOfRegKeys[i - 1].ReqAdminToModify))
+                            ListOfRegKeys.Remove(ListOfRegKeys[i - 1]);
+                    }
+                }
+            }
+
+            if (toExecuteAsAdmin != null)
+            {
+                bool result = await StartRegCleaner(true, toExecuteAsAdmin);
+                if (result)
+                {
+                    for (int i = ListOfRegKeys.Count; i > 0; i--)
+                    {
+                        if ((ListOfRegKeys[i - 1].IsChecked) && (ListOfRegKeys [i - 1].ReqAdminToModify))
                             ListOfRegKeys.Remove(ListOfRegKeys[i - 1]);
                     }
                 }
@@ -127,9 +152,11 @@ namespace Cleaner.NET.ViewModel
             mainWindowViewModel.TabControlIsEnabled = true;
             ProgressBarIsIndeterminate = false;
         }
-        private async Task<bool> StartRegCleaner(string toExecute)
+        private async Task<bool> StartRegCleaner(bool AsAdmin, string toExecute)
         {
             Process regCleaner = new Process();
+            if (AsAdmin)
+                regCleaner.StartInfo.Verb = "runas";
             regCleaner.StartInfo.FileName = "RegCleaner.exe";
             regCleaner.StartInfo.Arguments = toExecute;
             regCleaner.StartInfo.CreateNoWindow = true;
@@ -168,37 +195,37 @@ namespace Cleaner.NET.ViewModel
             {        
                 RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_LOCAL_MACHINE_Software_Microsoft_Windows_CurrentVersion_Uninstall());
                 foreach (RegistryItem item in regItems)
-                    ListOfRegKeys.Add(new RegistryListItem(true, true, item.Key, item.Value, item.ValueData));
+                    ListOfRegKeys.Add(new RegistryListItem(true, true, true, item.Key, item.Value, item.ValueData));
             }
             if (MissingDLLIsChecked)
             {
                 RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_SharedDLLs());
                 foreach (RegistryItem item in regItems)
-                    ListOfRegKeys.Add(new RegistryListItem(false, true, item.Key, item.Value, item.ValueData));
+                    ListOfRegKeys.Add(new RegistryListItem(true, false, true, item.Key, item.Value, item.ValueData));
             }
             if(MissingFilesIsChecked)
             {
                 RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_NT_CurrentVersion_AppCompatFlags_Compatibility_Assistant());
                 foreach (RegistryItem item in regItems)
-                    ListOfRegKeys.Add(new RegistryListItem(false, true, item.Key, item.Value, item.ValueData));
+                    ListOfRegKeys.Add(new RegistryListItem(false, false, true, item.Key, item.Value, item.ValueData));
             }
             if (MissingMUIIsChecked)
             {
                 RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache());
                 foreach (RegistryItem item in regItems)
-                    ListOfRegKeys.Add(new RegistryListItem(false, true, item.Key, item.Value, item.ValueData));
+                    ListOfRegKeys.Add(new RegistryListItem(false, false, true, item.Key, item.Value, item.ValueData));
             }
             if(InvalidFileExtensionsIsChecked)
             {
                 RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_CurrentVersion_Explorer_FileExts());
                 foreach (RegistryItem item in regItems)
-                    ListOfRegKeys.Add(new RegistryListItem(true, true, item.Key, item.Value, item.ValueData));
+                    ListOfRegKeys.Add(new RegistryListItem(false, true, true, item.Key, item.Value, item.ValueData));
             }
             if (ReferencesToTheInstallerIsChecked)
             {
                 RegistryItem[] regItems = await Task.Run(() => WindowsRegistryCleaner.HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders());
                 foreach (RegistryItem item in regItems)
-                    ListOfRegKeys.Add(new RegistryListItem(false, true, item.Key, item.Value, item.ValueData));
+                    ListOfRegKeys.Add(new RegistryListItem(true, false, true, item.Key, item.Value, item.ValueData));
             }
             mainWindowViewModel.TabControlIsEnabled = true;
             ProgressBarIsIndeterminate = false;
@@ -210,13 +237,15 @@ namespace Cleaner.NET.ViewModel
         /* delete key or only value in key */
         public bool DeleteFullKey { get; set; }
         /*  */
+        public bool ReqAdminToModify { get; set; }
         public bool IsChecked { get; set; }
         public string Key { get; set; }
         public string Value {get; set; }
         public string ValueData { get; set; }
 
-        public RegistryListItem(bool DeleteFullKey, bool IsChecked, string Key, string Value, string ValueData)
+        public RegistryListItem(bool ReqAdminToModify, bool DeleteFullKey, bool IsChecked, string Key, string Value, string ValueData)
         {
+            this.ReqAdminToModify = ReqAdminToModify;
             this.DeleteFullKey= DeleteFullKey;
             this.IsChecked = IsChecked;
             this.Key = Key;
