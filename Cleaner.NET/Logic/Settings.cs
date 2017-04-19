@@ -63,6 +63,8 @@ namespace Cleaner.NET
             vm.registryTabViewModel.MissingFilesIsChecked = Convert.ToBoolean(xmlReader.GetSettingByName("MissingDLLIsChecked"));
             vm.registryTabViewModel.MissingMUIIsChecked = Convert.ToBoolean(xmlReader.GetSettingByName("MissingFilesIsChecked"));
             vm.registryTabViewModel.MissingSoftIsChecked = Convert.ToBoolean(xmlReader.GetSettingByName("MissingMUIIsChecked"));
+            vm.registryTabViewModel.InvalidFileExtensionsIsChecked = Convert.ToBoolean(xmlReader.GetSettingByName("InvalidFileExtensionsIsChecked"));
+            vm.registryTabViewModel.ReferencesToTheInstallerIsChecked = Convert.ToBoolean(xmlReader.GetSettingByName("ReferencesToTheInstallerIsChecked"));
         }
 
         public static void Save(MainWindowViewModel vm)
@@ -94,6 +96,9 @@ namespace Cleaner.NET
             AppSettings.Default[AddSettingItem("MissingDLLIsChecked", typeof(bool)).Name] = vm.registryTabViewModel.MissingFilesIsChecked;
             AppSettings.Default[AddSettingItem("MissingFilesIsChecked", typeof(bool)).Name] = vm.registryTabViewModel.MissingMUIIsChecked;
             AppSettings.Default[AddSettingItem("MissingMUIIsChecked", typeof(bool)).Name] = vm.registryTabViewModel.MissingSoftIsChecked;
+            AppSettings.Default[AddSettingItem("InvalidFileExtensionsIsChecked", typeof(bool)).Name] = vm.registryTabViewModel.InvalidFileExtensionsIsChecked;
+            AppSettings.Default[AddSettingItem("ReferencesToTheInstallerIsChecked", typeof(bool)).Name] = vm.registryTabViewModel.ReferencesToTheInstallerIsChecked;
+
         }
 
         private static void SaveCheckBoxes(ObservableCollection<object> obj)

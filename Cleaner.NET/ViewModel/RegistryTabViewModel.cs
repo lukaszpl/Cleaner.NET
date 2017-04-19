@@ -31,6 +31,7 @@ namespace Cleaner.NET.ViewModel
 
         public ICommand AnalyzeCommand { get; set; }
         public ICommand CleanCommand { get; set; }
+        public ICommand CheckAllKeysCommand { get; set; }
 
         private ObservableCollection<RegistryListItem> _ListOfRegKeys = new ObservableCollection<RegistryListItem>();
         private bool _ProgressBarIsIndeterminate;
@@ -40,6 +41,7 @@ namespace Cleaner.NET.ViewModel
         private bool _MissingMUIIsChecked = true;
         private bool _InvalidFileExtensionsIsChecked = true;
         private bool _ReferencesToTheInstallerIsChecked = true;
+        private bool _CheckAllKeysIsChecked = true;
 
         public ObservableCollection<RegistryListItem> ListOfRegKeys
         {
@@ -81,11 +83,31 @@ namespace Cleaner.NET.ViewModel
             get { return _ReferencesToTheInstallerIsChecked; }
             set { Set(() => ReferencesToTheInstallerIsChecked, ref _ReferencesToTheInstallerIsChecked, value); }
         }
+        public bool CheckAllKeysIsChecked
+        {
+            get { return _CheckAllKeysIsChecked; }
+            set { Set(() => CheckAllKeysIsChecked, ref _CheckAllKeysIsChecked, value); }
+        }
         public RegistryTabViewModel(MainWindowViewModel mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
             AnalyzeCommand = new RelayCommand(AnalyzeMethod);
             CleanCommand = new RelayCommand(CleanMethod);
+            CheckAllKeysCommand = new RelayCommand(CheckAllKeysMethod);
+        }
+
+        private void CheckAllKeysMethod()
+        {
+            for (int i = ListOfRegKeys.Count; i > 0; i--)
+            {
+                RegistryListItem item = ListOfRegKeys[i - 1];
+                ListOfRegKeys.Remove(item);
+                if (CheckAllKeysIsChecked)
+                    item.IsChecked = true;
+                else
+                    item.IsChecked = false;
+                ListOfRegKeys.Insert(i - 1, item);
+            }
         }
 
         private async void CleanMethod()

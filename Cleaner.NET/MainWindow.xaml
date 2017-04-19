@@ -60,7 +60,7 @@
                             <CheckBox Content="{x:Static p:Lang.ReferencesToTheInstaller}" IsChecked="{Binding ReferencesToTheInstallerIsChecked}"/>
                         </ItemsControl>
                     </ScrollViewer>
-                    <ListView Margin="239,25,5,63" ItemsSource="{Binding ListOfRegKeys}" SelectionMode="Single">
+                    <ListView Margin="239,25,5,63" ItemsSource="{Binding ListOfRegKeys, Mode=TwoWay}" SelectionMode="Single">
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
@@ -81,6 +81,7 @@
                     <Button Content="{x:Static p:Lang.RegistrySearch}" Command="{Binding AnalyzeCommand}" HorizontalAlignment="Left" Margin="239,0,0,5" VerticalAlignment="Bottom" Width="185" Height="50" FontWeight="Bold"/>
                     <Button Content="{x:Static p:Lang.RegistryClean}" Command="{Binding CleanCommand}" HorizontalAlignment="Right" Margin="0,0,5,5" VerticalAlignment="Bottom" Width="185" Height="50" FontWeight="Bold"/>
                     <ProgressBar Height="15" Margin="239,5,5,0" VerticalAlignment="Top" IsIndeterminate="{Binding ProgressBarIsIndeterminate}"/>
+                    <CheckBox HorizontalAlignment="Left" Margin="245,29,0,0" VerticalAlignment="Top" Command="{Binding CheckAllKeysCommand}" IsChecked="{Binding CheckAllKeysIsChecked}"/>
                 </Grid>
             </TabItem>
             <TabItem DataContext="{Binding Children[2]}" Header="{x:Static p:Lang.Settings_TabItem}" FontSize="13">
