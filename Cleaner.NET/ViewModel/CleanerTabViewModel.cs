@@ -14,6 +14,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA */
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,6 +29,7 @@ namespace Cleaner.NET.ViewModel
 {
     public class CleanerTabViewModel : ViewModelBase
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private MainWindowViewModel mainWindowViewModel;
         #region commands
         public ICommand AnalyzeCommand { get; set; }
@@ -189,6 +191,7 @@ namespace Cleaner.NET.ViewModel
         {
             try
             {
+                logger.Info("PluginEvents is called... DoClean: " + DoClean);
                 foreach (object obj in ListOfOtherElemets)
                 {
                     CheckBox a = obj as CheckBox;
@@ -204,13 +207,15 @@ namespace Cleaner.NET.ViewModel
             }
             catch (Exception e)
             {
-                MessageBox.Show(Languages.Lang.PluginError + "\n\n" + e.ToString(), Languages.Lang.MsgError, MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Error("Plugin error: " + e.Message);
+                MessageBox.Show(Languages.Lang.PluginError, Languages.Lang.MsgError, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         #endregion
 
         private async Task Clean(bool DoClean)
         {
+            logger.Info("Clean method is called... DoClean: " + DoClean);
             CleanClass cleanClass = new CleanClass(Thread.CurrentThread.CurrentUICulture);
             foreach (object obj in ListOfWindowsElements)
             {

@@ -13,6 +13,7 @@
     along with Cleaner .NET; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA */
 using GalaSoft.MvvmLight;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,6 +23,7 @@ namespace Cleaner.NET.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public CleanerTabViewModel cleanerTabViewModel;
         public RegistryTabViewModel registryTabViewModel;
         public SettingsTabViewModel settingsTabViewModel;
@@ -68,11 +70,20 @@ namespace Cleaner.NET.ViewModel
         public List<PluginLoader> plugins = new List<PluginLoader>();
         private void LoadPlugins()
         {
+            logger.Info("Looking for plugins in \\plugins folder...");
             foreach (string path in PluginLoader.GetPathToPlugins())
-            {           
+            {
+                logger.Info("Plugin found: " + path);
                 PluginLoader pl = new PluginLoader(path);
                 if (pl.IsWorking)
+                {
                     plugins.Add(pl);
+                    logger.Info("Plugin is loaded: " + pl.PluginName);
+                }
+                else
+                {
+                    logger.Warn("Plugin is not loaded: " + path);
+                }
             }
         }
         #endregion

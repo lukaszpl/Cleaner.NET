@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
@@ -12,8 +13,10 @@ namespace Cleaner.NET
     /// </summary>
     public partial class App : Application
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            logger.Info("Starting Cleaner .NET " + Informations.TextBuild);
             if (Framework.FrameworkVersion.Is45DotNetVersion())
             {
                 string path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
@@ -31,6 +34,7 @@ namespace Cleaner.NET
             }
             else
             {
+                logger.Error("Not found .NET verion >= 4.5");
                 if (MessageBox.Show("Nie odnaleziono Microsoft .NET Framework w wersji 4.5 lub nowszej! Aby uruchomić program zainstaluj wymagany składnik! Czy przekierować Cię do strony pobierania?", "Błąd!", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                 {
                     System.Diagnostics.Process.Start("http://www.microsoft.com/en-us/download/details.aspx?id=30653");

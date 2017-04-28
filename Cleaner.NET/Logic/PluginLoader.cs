@@ -21,11 +21,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using PluginTemplate;
+using NLog;
 
 namespace Cleaner.NET
 {
     public class PluginLoader
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private Assembly DLL;
         private int CleanerNetVersion = 1;
         IPlugin plugin;
@@ -46,6 +48,7 @@ namespace Cleaner.NET
                 PluginName = plugin.PluginName;
                 if (CleanerNetVersion != plugin.CleanerNetVersion)
                 {
+                    logger.Warn("Plugin " + PluginName + " is outdate! ");
                     MessageBoxResult result =  MessageBox.Show(Languages.Lang.OutOfDatePlugin + "\n" + path, Languages.Lang.MsgWarning, MessageBoxButton.YesNo, MessageBoxImage.Warning);
                     if (result == MessageBoxResult.Yes)
                         IsWorking = true;
@@ -57,8 +60,9 @@ namespace Cleaner.NET
             }
             catch(Exception e)
             {
-                MessageBox.Show(Languages.Lang.BadPlugin + "\n" + path + "\n\n" + e.ToString(), Languages.Lang.MsgError, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Languages.Lang.BadPlugin + "\n" + path, Languages.Lang.MsgError, MessageBoxButton.OK, MessageBoxImage.Error);
                 IsWorking = false;
+                logger.Error("Plugin loading error: " + e.Message);
             }
         }
 

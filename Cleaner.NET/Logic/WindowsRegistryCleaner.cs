@@ -13,6 +13,7 @@
     along with Cleaner .NET; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA */
 using Microsoft.Win32;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,21 +22,25 @@ namespace Cleaner .NET
 {
     public class WindowsRegistryCleaner
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public static RegistryItem[] HKEY_LOCAL_MACHINE_Software_Microsoft_Windows_CurrentVersion_Uninstall()
         {
             List<RegistryItem> result = new List<RegistryItem>();
-            if (Environment.Is64BitProcess)
+            try
             {
-                RegistryKey rkey64 = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall");
+                if (Environment.Is64BitProcess)
+                {
+                    RegistryKey rkey64 = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall");
                     result.AddRange(HKEY_LOCAL_MACHINE_Software_Microsoft_Windows_CurrentVersion_Uninstall_Method(rkey64));
-                RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
+                    RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
                     result.AddRange(HKEY_LOCAL_MACHINE_Software_Microsoft_Windows_CurrentVersion_Uninstall_Method(rkey32));
-            }
-            else
-            {
-                RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall");
-                result.AddRange(HKEY_LOCAL_MACHINE_Software_Microsoft_Windows_CurrentVersion_Uninstall_Method(rkey32));
-            }
+                }
+                else
+                {
+                    RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall");
+                    result.AddRange(HKEY_LOCAL_MACHINE_Software_Microsoft_Windows_CurrentVersion_Uninstall_Method(rkey32));
+                }
+            }catch(Exception e) { logger.Error("HKEY_LOCAL_MACHINE_Software_Microsoft_Windows_CurrentVersion_Uninstall error: " + e.Message); }
             return result.ToArray();
         }
         private static RegistryItem[] HKEY_LOCAL_MACHINE_Software_Microsoft_Windows_CurrentVersion_Uninstall_Method(RegistryKey rkey)
@@ -67,60 +72,72 @@ namespace Cleaner .NET
         {
             //delete only value
             List<RegistryItem> result = new List<RegistryItem>();
-            if (Environment.Is64BitProcess)
+            try
             {
-                RegistryKey rkey64 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\SharedDLLs");
-                result.AddRange(GetRegItemsForMissingFiles(rkey64));
-                RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\SharedDLLs");
-                result.AddRange(GetRegItemsForMissingFiles(rkey32));
+                if (Environment.Is64BitProcess)
+                {
+                    RegistryKey rkey64 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\SharedDLLs");
+                    result.AddRange(GetRegItemsForMissingFiles(rkey64));
+                    RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\SharedDLLs");
+                    result.AddRange(GetRegItemsForMissingFiles(rkey32));
+                }
+                else
+                {
+                    RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\SharedDLLs");
+                    result.AddRange(GetRegItemsForMissingFiles(rkey32));
+                }
             }
-            else
-            {
-                RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\SharedDLLs");
-                result.AddRange(GetRegItemsForMissingFiles(rkey32));
-            }
-
+            catch (Exception e) { logger.Error("HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_SharedDLLs error: " + e.Message); }
             return result.ToArray();
         }      
         public static RegistryItem[] HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_NT_CurrentVersion_AppCompatFlags_Compatibility_Assistant()
         {
             //delete only value
             List<RegistryItem> result = new List<RegistryItem>();
-            if (Environment.Is64BitProcess)
+            try
             {
-                RegistryKey rkey64 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store");
-                result.AddRange(GetRegItemsForMissingFiles(rkey64));
-                RegistryKey rkey32 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store");
-                result.AddRange(GetRegItemsForMissingFiles(rkey32));
-                RegistryKey rkey264 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Persisted");
-                result.AddRange(GetRegItemsForMissingFiles(rkey264));
-                RegistryKey rkey232 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Persisted");
-                result.AddRange(GetRegItemsForMissingFiles(rkey232));
-            }else
-            {
-                RegistryKey rkey32 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store");
-                result.AddRange(GetRegItemsForMissingFiles(rkey32));
-                RegistryKey rkey232 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Persisted");
-                result.AddRange(GetRegItemsForMissingFiles(rkey232));
+                if (Environment.Is64BitProcess)
+                {
+                    RegistryKey rkey64 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store");
+                    result.AddRange(GetRegItemsForMissingFiles(rkey64));
+                    RegistryKey rkey32 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store");
+                    result.AddRange(GetRegItemsForMissingFiles(rkey32));
+                    RegistryKey rkey264 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Persisted");
+                    result.AddRange(GetRegItemsForMissingFiles(rkey264));
+                    RegistryKey rkey232 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Persisted");
+                    result.AddRange(GetRegItemsForMissingFiles(rkey232));
+                }
+                else
+                {
+                    RegistryKey rkey32 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store");
+                    result.AddRange(GetRegItemsForMissingFiles(rkey32));
+                    RegistryKey rkey232 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Persisted");
+                    result.AddRange(GetRegItemsForMissingFiles(rkey232));
+                }
             }
+            catch (Exception e) { logger.Error("HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_NT_CurrentVersion_AppCompatFlags_Compatibility_Assistant error: " + e.Message); }
             return result.ToArray();
         }
         
         public static RegistryItem[] HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache()
         {
             List<RegistryItem> result = new List<RegistryItem>();
-            if (Environment.Is64BitProcess)
+            try
             {
-                RegistryKey rkey64 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\MuiCache");
-                result.AddRange(HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache_Method(rkey64));
-                RegistryKey rkey32 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WOW6432Node\Classes\Local Settings\Software\Microsoft\Windows\Shell\MuiCache");
-                result.AddRange(HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache_Method(rkey32));
+                if (Environment.Is64BitProcess)
+                {
+                    RegistryKey rkey64 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\MuiCache");
+                    result.AddRange(HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache_Method(rkey64));
+                    RegistryKey rkey32 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WOW6432Node\Classes\Local Settings\Software\Microsoft\Windows\Shell\MuiCache");
+                    result.AddRange(HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache_Method(rkey32));
+                }
+                else
+                {
+                    RegistryKey rkey32 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\MuiCache");
+                    result.AddRange(HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache_Method(rkey32));
+                }
             }
-            else
-            {
-                RegistryKey rkey32 = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\MuiCache");
-                result.AddRange(HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache_Method(rkey32));
-            }                          
+            catch (Exception e) { logger.Error("HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache error: " + e.Message); }
             return result.ToArray();
         }
         private static RegistryItem[] HKEY_CURRENT_USER_SOFTWARE_Classes_Local_Settings_Software_Microsoft_Windows_Shell_MuiCache_Method(RegistryKey rkey)
@@ -142,39 +159,47 @@ namespace Cleaner .NET
         public static RegistryItem[] HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_CurrentVersion_Explorer_FileExts()
         {
             List<RegistryItem> result = new List<RegistryItem>();
-            RegistryKey rkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FileExts");
-            foreach (string key in rkey.GetSubKeyNames())
+            try
             {
-                RegistryKey subKey = rkey.OpenSubKey(key);
-                bool toDelete = true;
-                foreach (string subKeyName in subKey.GetSubKeyNames())
+                RegistryKey rkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FileExts");
+                foreach (string key in rkey.GetSubKeyNames())
                 {
-                    RegistryKey subKey2 = subKey.OpenSubKey(subKeyName);
+                    RegistryKey subKey = rkey.OpenSubKey(key);
+                    bool toDelete = true;
+                    foreach (string subKeyName in subKey.GetSubKeyNames())
+                    {
+                        RegistryKey subKey2 = subKey.OpenSubKey(subKeyName);
 
-                    if (subKey2.GetValueNames().Length != 0)
-                        toDelete = false;
+                        if (subKey2.GetValueNames().Length != 0)
+                            toDelete = false;
+                    }
+                    if (toDelete)
+                        result.Add(new RegistryItem(subKey.Name, null, null));
                 }
-                if (toDelete)
-                    result.Add(new RegistryItem(subKey.Name, null, null));
             }
+            catch (Exception e) { logger.Error("HKEY_CURRENT_USER_SOFTWARE_Microsoft_Windows_CurrentVersion_Explorer_FileExts error: " + e.Message); }
             return result.ToArray();
         }
 
         public static RegistryItem[] HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders()
         {
             List<RegistryItem> result = new List<RegistryItem>();
-            if (Environment.Is64BitProcess)
+            try
             {
-                RegistryKey rkey64 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\Folders");
-                result.AddRange(HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders_Method(rkey64));
-                RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Installer\Folders");
-                result.AddRange(HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders_Method(rkey32));
+                if (Environment.Is64BitProcess)
+                {
+                    RegistryKey rkey64 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\Folders");
+                    result.AddRange(HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders_Method(rkey64));
+                    RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Installer\Folders");
+                    result.AddRange(HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders_Method(rkey32));
+                }
+                else
+                {
+                    RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\Folders");
+                    result.AddRange(HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders_Method(rkey32));
+                }
             }
-            else
-            {
-                RegistryKey rkey32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\Folders");
-                result.AddRange(HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders_Method(rkey32));
-            }
+            catch (Exception e) { logger.Error("HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders error: " + e.Message); }
             return result.ToArray();
         }
         private static RegistryItem[] HKEY_LOCAL_MACHINE_SOFTWARE_Microsoft_Windows_CurrentVersion_Installer_Folders_Method(RegistryKey rkey)
