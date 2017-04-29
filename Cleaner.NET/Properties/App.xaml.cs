@@ -3,19 +3,25 @@ using System;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
+using System.Security.Permissions;
 using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Cleaner.NET
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+    [SecurityPermission(SecurityAction.Demand, Flags=SecurityPermissionFlag.ControlAppDomain)]
     public partial class App : Application
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+            currentDomain.UnhandledException += new UnhandledExceptionEventHandler(App_UnhandledException);
+
             logger.Info("Starting Cleaner .NET " + Informations.TextBuild);
             if (Framework.FrameworkVersion.Is45DotNetVersion())
             {
@@ -41,6 +47,12 @@ namespace Cleaner.NET
                 }
                 Environment.Exit(1);
             }
+        }
+
+        private static void App_UnhandledException(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception e = (Exception)args.ExceptionObject;
+            logger.Fatal("UnhandledException: " + e.ToString());
         }
     }
 }
