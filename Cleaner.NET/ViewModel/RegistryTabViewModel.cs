@@ -14,7 +14,6 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA */
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using NLog;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -28,7 +27,6 @@ namespace Cleaner.NET.ViewModel
 {
     public class RegistryTabViewModel : ViewModelBase
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
         private MainWindowViewModel mainWindowViewModel;
 
         public ICommand AnalyzeCommand { get; set; }
@@ -178,7 +176,6 @@ namespace Cleaner.NET.ViewModel
         }
         private async Task<bool> StartRegCleaner(bool AsAdmin, string toExecute)
         {
-            logger.Info("Starting RegCleaner...");
             Process regCleaner = new Process();
             if (AsAdmin)
                 regCleaner.StartInfo.Verb = "runas";
@@ -203,7 +200,6 @@ namespace Cleaner.NET.ViewModel
                 }
                 catch (Exception e)
                 {
-                    logger.Error("RegCleaner error! " + e.Message);
                     MessageBox.Show(e.ToString(), Languages.Lang.MsgError, MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
@@ -214,7 +210,6 @@ namespace Cleaner.NET.ViewModel
 
         private async void AnalyzeMethod()
         {
-            logger.Info("Starting the registry analysis...");
             mainWindowViewModel.TabControlIsEnabled = false;
             ProgressBarIsIndeterminate = true;
             ListOfRegKeys.Clear();

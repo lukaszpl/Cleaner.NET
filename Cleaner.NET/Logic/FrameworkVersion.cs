@@ -13,20 +13,17 @@
     along with Cleaner .NET; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA */
 using Microsoft.Win32;
-using NLog;
 using System;
 
 namespace Framework
 {
     class FrameworkVersion
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
         public static bool Is45DotNetVersion()
         {
             using (RegistryKey DNVKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey("SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full\\"))
             {
                 int releaseKey = Convert.ToInt32(DNVKey.GetValue("Release"));
-                logger.Info("Installed .NET version: " + releaseKey);
                 // "4.5 or later";
                 if ((releaseKey >= 378389))
                     return true;

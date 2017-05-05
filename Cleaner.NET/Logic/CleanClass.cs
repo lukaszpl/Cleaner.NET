@@ -12,7 +12,6 @@
     You should have received a copy of the GNU General Public License
     along with Cleaner .NET; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA */
-using NLog;
 using System;
 using System.Globalization;
 using System.IO;
@@ -24,7 +23,6 @@ namespace Cleaner.NET
 {
     public class CleanClass
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
         CultureInfo cultureInfo;
         public CleanClass(CultureInfo cultureInfo)
         {
@@ -48,13 +46,9 @@ namespace Cleaner.NET
                         if (DoDelete)
                             File.Delete(path);
                     }
-                    catch (Exception e)
-                    {
-                        Size -= info.Length;
-                        logger.Warn("Exception: " + e.Message);
-                    }
+                    catch (Exception) { Size -= info.Length; }
                 }
-                catch(Exception e) { logger.Warn("Cannot get file: " + path + " Exception: " + e.Message); }
+                catch(Exception) {}
             }
             return Math.Round(Size / (1024 * 1024), 2);
         }
@@ -67,7 +61,7 @@ namespace Cleaner.NET
                 {
                     dir.Delete(true);
                 }
-                catch(Exception e) { logger.Warn("Directory not deleted: " + path + " Exception: " + e.Message); }
+                catch(Exception) {}
             }
         }
         public string CleanTempFiles(bool DoClean)
@@ -84,7 +78,7 @@ namespace Cleaner.NET
                     DeleteDirectories(Path.GetTempPath());
                 }
             }
-            catch(Exception e) { logger.Warn("Directory.GetFiles Temp failed: " + e.Message); }
+            catch(Exception) {}
             return  Languages.Lang.Temp_CheckBox + ": " + Size + " MB" + "\n\n";
         }
         public string CleanWinErrors(bool DoClean)

@@ -1,12 +1,10 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Security.Permissions;
 using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace Cleaner.NET
 {
@@ -16,13 +14,10 @@ namespace Cleaner.NET
     [SecurityPermission(SecurityAction.Demand, Flags=SecurityPermissionFlag.ControlAppDomain)]
     public partial class App : Application
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += new UnhandledExceptionEventHandler(App_UnhandledException);
-
-            logger.Info("Starting Cleaner .NET " + Informations.TextBuild);
             if (Framework.FrameworkVersion.Is45DotNetVersion())
             {
                 string path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
@@ -40,7 +35,6 @@ namespace Cleaner.NET
             }
             else
             {
-                logger.Error("Not found .NET verion >= 4.5");
                 if (MessageBox.Show("Nie odnaleziono Microsoft .NET Framework w wersji 4.5 lub nowszej! Aby uruchomić program zainstaluj wymagany składnik! Czy przekierować Cię do strony pobierania?", "Błąd!", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                 {
                     System.Diagnostics.Process.Start("http://www.microsoft.com/en-us/download/details.aspx?id=30653");
@@ -52,7 +46,9 @@ namespace Cleaner.NET
         private static void App_UnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
             Exception e = (Exception)args.ExceptionObject;
-            logger.Fatal("UnhandledException: " + e.ToString());
+            StreamWriter sw = File.CreateText(DateTime.Now.ToString("hh-mm-ss_dd-MM-yyyy") + "-ErrorLog.txt");
+            sw.Write(e.ToString());
+            sw.Close();
         }
     }
 }
