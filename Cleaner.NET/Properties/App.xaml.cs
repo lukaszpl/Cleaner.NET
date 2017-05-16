@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Security.Permissions;
 using System.Threading;
 using System.Windows;
@@ -45,10 +49,31 @@ namespace Cleaner.NET
 
         private static void App_UnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
-            Exception e = (Exception)args.ExceptionObject;
-            StreamWriter sw = File.CreateText(DateTime.Now.ToString("hh-mm-ss_dd-MM-yyyy") + "-ErrorLog.txt");
-            sw.Write(e.ToString());
-            sw.Close();
+            MessageBoxResult msgResult = MessageBox.Show(Languages.Lang.SendReportQuestion, Languages.Lang.MsgError, MessageBoxButton.YesNo, MessageBoxImage.Error);
+            if (msgResult == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    Exception e = (Exception)args.ExceptionObject;
+                    string SysInfo = SystemInformation.GetWindowsVersion() + SystemInformation.GetWindowsCompilation() + Environment.NewLine + "Cleaner .NET " + Build._Build + Environment.NewLine;
+                    StreamWriter sw = File.CreateText(DateTime.Now.ToString("hh-mm-ss_dd-MM-yyyy") + "-ErrorLog.txt");
+                    sw.Write(SysInfo + e.ToString());
+                    sw.Close();
+                    //
+                    using (WebClient client = new WebClient())
+                    {
+                        var data = new NameValueCollection();
+                        data["report"] = SysInfo + e.ToString();
+                        //working with https only
+                        var response = client.UploadValues("https://csharp-dev.pl/CleanerNETErrorReports/SendReport.php?", "POST", data);
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show(Languages.Lang.ReportNotSended, Languages.Lang.MsgError, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            Environment.Exit(1);
         }
     }
 }

@@ -279,4 +279,10 @@
   <data name="ReferencesToTheInstaller" xml:space="preserve">
     <value>Missing references to the installer</value>
   </data>
+  <data name="ReportNotSended" xml:space="preserve">
+    <value>Report delivery failed...</value>
+  </data>
+  <data name="SendReportQuestion" xml:space="preserve">
+    <value>An error has occurred that prevents the application from continuing to run. Do you want to send a report to developer?</value>
+  </data>
 </root>

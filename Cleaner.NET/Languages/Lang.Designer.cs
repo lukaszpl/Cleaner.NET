@@ -430,6 +430,24 @@ namespace Cleaner.NET.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report delivery failed....
+        /// </summary>
+        public static string ReportNotSended {
+            get {
+                return ResourceManager.GetString("ReportNotSended", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error has occurred that prevents the application from continuing to run. Do you want to send a report to developer?.
+        /// </summary>
+        public static string SendReportQuestion {
+            get {
+                return ResourceManager.GetString("SendReportQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string Settings_TabItem {

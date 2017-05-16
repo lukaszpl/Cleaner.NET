@@ -330,4 +330,10 @@
   <data name="ReferencesToTheInstaller" xml:space="preserve">
     <value>Brakujące odniesienia do instalatora</value>
   </data>
+  <data name="ReportNotSended" xml:space="preserve">
+    <value>Nie udało się przesłać raportu...</value>
+  </data>
+  <data name="SendReportQuestion" xml:space="preserve">
+    <value>Wystąpił błąd, który uniemożliwia kontynuowanie pracy aplikacji. Czy chcesz wysłać raport do programisty?</value>
+  </data>
 </root>
