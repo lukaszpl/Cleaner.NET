@@ -336,4 +336,7 @@
   <data name="SendReportQuestion" xml:space="preserve">
     <value>Wystąpił błąd, który uniemożliwia kontynuowanie pracy aplikacji. Czy chcesz wysłać raport do programisty?</value>
   </data>
+  <data name="ReportSended" xml:space="preserve">
+    <value>Raport został wysłany!</value>
+  </data>
 </root>

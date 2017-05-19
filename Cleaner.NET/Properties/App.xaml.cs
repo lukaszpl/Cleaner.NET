@@ -45,21 +45,22 @@ namespace Cleaner.NET
                 }
                 Environment.Exit(1);
             }
+            throw new Exception("lolz");
         }
 
         private static void App_UnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
+            Exception e = (Exception)args.ExceptionObject;
+            string SysInfo = SystemInformation.GetWindowsVersion() + SystemInformation.GetWindowsCompilation() + Environment.NewLine + "Cleaner .NET " + Build._Build + Environment.NewLine;
+            StreamWriter sw = File.CreateText(DateTime.Now.ToString("hh-mm-ss_dd-MM-yyyy") + "-ErrorLog.txt");
+            sw.Write(SysInfo + e.ToString());
+            sw.Close();
+            //
             MessageBoxResult msgResult = MessageBox.Show(Languages.Lang.SendReportQuestion, Languages.Lang.MsgError, MessageBoxButton.YesNo, MessageBoxImage.Error);
             if (msgResult == MessageBoxResult.Yes)
             {
                 try
                 {
-                    Exception e = (Exception)args.ExceptionObject;
-                    string SysInfo = SystemInformation.GetWindowsVersion() + SystemInformation.GetWindowsCompilation() + Environment.NewLine + "Cleaner .NET " + Build._Build + Environment.NewLine;
-                    StreamWriter sw = File.CreateText(DateTime.Now.ToString("hh-mm-ss_dd-MM-yyyy") + "-ErrorLog.txt");
-                    sw.Write(SysInfo + e.ToString());
-                    sw.Close();
-                    //
                     using (WebClient client = new WebClient())
                     {
                         var data = new NameValueCollection();
@@ -67,6 +68,7 @@ namespace Cleaner.NET
                         //working with https only
                         var response = client.UploadValues("https://csharp-dev.pl/CleanerNETErrorReports/SendReport.php?", "POST", data);
                     }
+                    MessageBox.Show(Languages.Lang.ReportSended, Languages.Lang.Information, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception)
                 {

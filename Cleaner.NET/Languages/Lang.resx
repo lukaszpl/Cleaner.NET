@@ -285,4 +285,7 @@
   <data name="SendReportQuestion" xml:space="preserve">
     <value>An error has occurred that prevents the application from continuing to run. Do you want to send a report to developer?</value>
   </data>
+  <data name="ReportSended" xml:space="preserve">
+    <value>Report has been sended!</value>
+  </data>
 </root>

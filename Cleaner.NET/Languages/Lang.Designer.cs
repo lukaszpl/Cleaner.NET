@@ -439,6 +439,15 @@ namespace Cleaner.NET.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report has been sended!.
+        /// </summary>
+        public static string ReportSended {
+            get {
+                return ResourceManager.GetString("ReportSended", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error has occurred that prevents the application from continuing to run. Do you want to send a report to developer?.
         /// </summary>
         public static string SendReportQuestion {
